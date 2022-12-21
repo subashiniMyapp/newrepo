@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Session;
+
+class UsersController extends Controller
+{
+    public function index()
+    {
+        return view('login');
+    }
+    public function loginAuth(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $creatials = $request->only('email', 'password');
+        if (Auth::attempt($creatials)) {
+            //$request->session()->regenerate();
+            return redirect()->intended('dashborad')->withSuccess('Welcome Admin');
+        }
+        return redirect('login')->withSuccess('Kindly check your login creatials..!');
+    }
+    public function dashborad()
+    {
+        if (Auth::check()) {
+            return view('dashboard');
+        }
+        return redirect('login')->withSuccess('Your Not Allowed to access');
+    }
+    public function newItem()
+    {
+        return view('add-items');
+    }
+    public function addBill()
+    {
+        return view('create-bill');
+    }
+
+    public function singOut()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect('login');
+    }
+}
