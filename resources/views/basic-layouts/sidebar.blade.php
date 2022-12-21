@@ -11,23 +11,23 @@
                     <i class="fas fa-tachometer-alt"></i>Dashboard</a>
             </li>
             <li class="active">
-                <a href="{{route('add-item')}}">
-                    <i class="fas fa-chart-bar"></i>new bills</a>
+                <a href="{{route('List-of-invoice')}}">
+                    <i class="fas fa-chart-bar"></i>List of Invioce</a>
             </li>
             <li>
-                <a href="{{route('create-bill')}}">
+                <a href="{{route('New-invoice')}}">
                     <i class="fas fa-table"></i>add new items</a>
             </li>
             <li>
-                <a href="{{route('add-item')}}">
-                    <i class="far fa-check-square"></i>Comming soon</a>
+                <a href="{{route('New-invoice')}}">
+                    <i class="far fa-check-square"></i>Make New Invice</a>
             </li>
             <li>
-                <a href="{{route('create-bill')}}">
+                <a href="{{route('New-invoice')}}">
                     <i class="fas fa-calendar-alt"></i>Comming soon</a>
             </li>
             <li>
-                <a href="{{route('add-item')}}">
+                <a href="{{route('New-invoice')}}">
                     <i class="fas fa-map-marker-alt"></i>Comming soon</a>
             </li>
 

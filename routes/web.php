@@ -17,6 +17,6 @@ Route::get('/', [UsersController::class, 'index'])->name('login');
 Route::get('login', [UsersController::class, 'index'])->name('login');
 Route::post('loginAuth', [UsersController::class, 'loginAuth'])->name('loginAuth');
 Route::get('/dashborad', [UsersController::class, 'dashborad'])->name('dashborad');
-Route::get('/add-item', [UsersController::class, 'newItem'])->name('add-item');
-Route::get('/create-bill', [UsersController::class, 'addBill'])->name('create-bill');
+Route::get('/List-of-invoice', [UsersController::class, 'newItem'])->name('List-of-invoice');
+Route::get('/New-invoice', [UsersController::class, 'addBill'])->name('New-invoice');
 Route::get('/singOut', [UsersController::class, 'singOut'])->name('singOut');

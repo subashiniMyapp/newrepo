@@ -35,11 +35,11 @@ class UsersController extends Controller
     }
     public function newItem()
     {
-        return view('add-items');
+        return view('invoice-list');
     }
     public function addBill()
     {
-        return view('create-bill');
+        return view('new-invoice');
     }
 
     public function singOut()

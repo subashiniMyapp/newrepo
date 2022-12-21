@@ -18,14 +18,6 @@
             <li class="has-sub">
                 <a class="js-arrow" href="#">
                     <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                    <li>
-                        <a href="#">Dashboard 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Dashboard 2</a>
-                    </li>
-                </ul>
             </li>
             <li>
                 <a href="#">
