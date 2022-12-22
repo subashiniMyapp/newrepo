@@ -39,7 +39,7 @@
     }
 
     .invoice-box table td {
-        padding: 5px;
+        padding: 20px;
         vertical-align: middle;
     }
 
@@ -127,6 +127,12 @@
         width: 30%;
         margin-right: auto;
     }
+
+    .adjust {
+        width: 20%;
+        margin-right: 15px;
+
+    }
 </style>
 
 <body class="animsition">
@@ -208,46 +214,63 @@
                                     <td colspan="3">
                                         <table cellspacing="0px" cellpadding="2px">
                                             <tr class="heading">
-                                                <td style="width:25%;">
+                                                <td style="width:5%; text-align:center;">
+                                                    S.NO
+                                                </td>
+                                                <td style="width:25%;text-align:center;">
                                                     ITEM
                                                 </td>
                                                 <td style="width:10%; text-align:center;">
-                                                    QTY.
+                                                    HSN/SAC
                                                 </td>
-                                                <td style="width:10%; text-align:right;">
-                                                    PRICE (INR)
+                                                <td style="width:10%; text-align:center;">
+                                                    QTY
                                                 </td>
-                                                <td style="width:15%; text-align:right;">
-                                                    TAX RATE & TYPE
+                                                <td style="width:15%; text-align:center;">
+                                                    UMO
                                                 </td>
-                                                <td style="width:15%; text-align:right;">
-                                                    TAX AMOUNT (INR)
+                                                <td style="width:15%; text-align:center;">
+                                                    RATE
                                                 </td>
-                                                <td style="width:15%; text-align:right;">
+                                                <td style="width:15%; text-align:center;">
+                                                    DISCOUNT (%)
+                                                </td>
+                                                <td style="width:15%; text-align:center;">
                                                     TOTAL AMOUNT (INR)
+                                                </td>
+                                                <td>
                                                 </td>
                                             </tr>
                                             <tr class="item">
-                                                <td style="width:25%;">
-                                                    Johnson's Baby Skincare Wipes 80s
-                                                    Pack Of 2 Rs. 60 Off
-                                                    HSN Code :4818
-                                                    novajj079
+                                                <td style="width:5%;text-align:center;">
+                                                    <input type="text" class="form-control">
+                                                </td>
+                                                <td style="width:25%;text-align:center;">
+                                                    <select class="form-control">
+                                                        <option selected disabled>Select Item</option>
+                                                        <option>computer</option>
+                                                        <option>laptop</option>
+                                                        <option>moniter</option>
+                                                        <option>hard disk</option>
+                                                    </select>
                                                 </td>
                                                 <td style="width:10%; text-align:center;">
-                                                    2
+                                                    <input type="text" class="form-control">
                                                 </td>
-                                                <td style="width:10%; text-align:right;">
-                                                    322.03
+                                                <td style="width:10%; text-align:center;">
+                                                    <input type="text" class="form-control">
                                                 </td>
-                                                <td style="width:15%; text-align:right;">
-                                                    18% IGST
+                                                <td style="width:15%; text-align:center;">
+                                                    <input type="text" class="form-control" readonly>
                                                 </td>
-                                                <td style="width:15%; text-align:right;">
-                                                    57.97
+                                                <td style="width:15%; text-align:center;">
+                                                    <input type="text" class="form-control">
                                                 </td>
-                                                <td style="width:15%; text-align:right;">
-                                                    380
+                                                <td style="width:15%; text-align:center;">
+                                                    <input type="text" class="form-control">
+                                                </td>
+                                                <td style="width:15%; text-align:center;">
+                                                    <input type="text" class="form-control">
                                                 </td>
                                             </tr>
                                             <tr class="item">
@@ -270,7 +293,7 @@
                                     </td>
                                 </table>
                                 <tr class="total">
-                                    <td colspan="3" align="right"> Total Amount in Words : <b> Three Hundred Eighty Rupees Only </b> </td>
+                                    <td colspan="3" class="text-center"> Total Amount in Words : <b> Three Hundred Eighty Rupees Only </b> </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
