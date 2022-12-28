@@ -67,7 +67,7 @@
                                                     <h5>Invoice No : <span style="margin-left : 70px;">{{01}}</span></h5>
                                                     <h5>Invoice Date : <input type="text" name="" id="order_date" class="customstyle" style="margin-left : 50px;"> </h5>
                                                     <h5>Buyer's Order no : <input type="text" name="" id="" class="customstyle" style="margin-left : 19px;"></h5>
-                                                    <h5>Buyer's Order Date :<input type="text" name="" id="buyer_date" class="customstyle" style="margin-left : 5px;"></h5>
+                                                    <h5>Buyer's Order Date :<input type="text" name="" id="buyer_date" class="customstyle" style="margin-left : 6px;"></h5>
                                                     <h5>Mode of payment :
                                                         <select name="" id="" class="customstyle" style="margin-left : 11px;">
                                                             <option>Cash</option>
@@ -100,7 +100,7 @@
                                                 <tr>
                                                     <th width="5%">Sr No.</th>
                                                     <th width="25%">Item Name</th>
-                                                    <th width="15%">HDN/NSSN</th>
+                                                    <th width="15%">HSN/SAC</th>
                                                     <th width="5%">Quantity</th>
                                                     <th width="15%">UOM</th>
                                                     <th width="10%">Price</th>
@@ -115,7 +115,7 @@
                                                             <option value="">Computer</option>
                                                             <option value="">laptop</option>
                                                             <option value="">moniter</option>
-                                                            <option value="">hard disk</option>t
+                                                            <option value="">hard disk</option>
                                                         </select>
                                                     </td>
                                                     <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
@@ -141,7 +141,8 @@
                                     <tr>
                                         <td colspan="2" class="text-center">
                                             <input type="hidden" name="total_item" id="total_item" value="1" />
-                                            <input type="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Create" />
+                                            <input type="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Cancel" />
+                                            <input type="submit" name="create_invoice" id="create_invoice" class="btn btn-success" value="Create" />
                                         </td>
                                     </tr>
                                 </table>
