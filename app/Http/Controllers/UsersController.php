@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\Items;
 use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
@@ -47,5 +47,15 @@ class UsersController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('login');
+    }
+    public function getEmployees()
+    {
+
+        $employees = Items::orderby('id', 'asc')->select('*')->get();
+
+        // Fetch all records
+        $response['data'] = $employees;
+
+        return response()->json($response);
     }
 }

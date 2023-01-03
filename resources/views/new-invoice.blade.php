@@ -15,6 +15,11 @@
         border-radius: 2px;
 
     }
+
+    .select2-container {
+        min-width: 12em !important;
+
+    }
 </style>
 
 <body class="animsition">
@@ -56,7 +61,7 @@
                                                         ADMIN ADDRESS,<br>
                                                         <h5>No.71, Shanmugam Street ,</h5>
                                                         <h5>Manjakuppam ,</h5>
-                                                        <h5>Cuddalore - 607001 ,</h5>
+                                                        <h5>Cuddalore - 607001 .</h5>
                                                         <h5>Contact : 7598395792 ,</h5>
                                                         <h5>e-Mail : admin007@gmail.com ,</h5>
                                                         <h5><strong>GSTIN : 33ASUPV122H1ZK.</strong></h5>
@@ -111,7 +116,7 @@
                                                 <tr>
                                                     <td><span id="sr_no">1</span></td>
                                                     <td>
-                                                        <select name="" id="" class="form-control">
+                                                        <select name="" id="selectitem" class="form-control">
                                                             <option value="">Computer</option>
                                                             <option value="">laptop</option>
                                                             <option value="">moniter</option>
@@ -173,6 +178,9 @@
 <link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- select-2 pulgin -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -186,6 +194,32 @@
             format: "dd-mm-yyyy",
             autoclose: true,
             showDropdowns: true,
-        })
+        });
+        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $("#selectitem").select2({
+            ajax: {
+                url: "getItemNames",
+                type: 'get',
+                dataType: 'json',
+                delay: 0,
+                data: function(params) {
+                    console.log(params);
+                    return {
+                        q: params.term // search term
+                    };
+                },
+                processResults: function(data) {
+                    // parse the results into the format expected by Select2.
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data
+                    return {
+                        results: data
+                    };
+                },
+                cache: false
+            },
+
+        });
+
     });
 </script>
