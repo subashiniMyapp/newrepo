@@ -20,3 +20,4 @@ Route::get('/dashborad', [UsersController::class, 'dashborad'])->name('dashborad
 Route::get('/List-of-invoice', [UsersController::class, 'newItem'])->name('List-of-invoice');
 Route::get('/New-invoice', [UsersController::class, 'addBill'])->name('New-invoice');
 Route::get('/singOut', [UsersController::class, 'singOut'])->name('singOut');
+Route::get('GetItems', [UsersController::class, 'getItemNames'])->name('GetItems');

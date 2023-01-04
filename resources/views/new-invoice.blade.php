@@ -72,7 +72,7 @@
                                                     <h5>Invoice No : <span style="margin-left : 70px;">{{01}}</span></h5>
                                                     <h5>Invoice Date : <input type="text" name="" id="order_date" class="customstyle" style="margin-left : 50px;"> </h5>
                                                     <h5>Buyer's Order no : <input type="text" name="" id="" class="customstyle" style="margin-left : 19px;"></h5>
-                                                    <h5>Buyer's Order Date :<input type="text" name="" id="buyer_date" class="customstyle" style="margin-left : 6px;"></h5>
+                                                    <h5>Buyer's Order Date :<input type="text" name="" id="buyer_date" class="customstyle" style="margin-left : 5px;"></h5>
                                                     <h5>Mode of payment :
                                                         <select name="" id="" class="customstyle" style="margin-left : 11px;">
                                                             <option>Cash</option>
@@ -116,16 +116,12 @@
                                                 <tr>
                                                     <td><span id="sr_no">1</span></td>
                                                     <td>
-                                                        <select name="" id="selectitem" class="form-control">
-                                                            <option value="">Computer</option>
-                                                            <option value="">laptop</option>
-                                                            <option value="">moniter</option>
-                                                            <option value="">hard disk</option>
+                                                        <select name="itemname" id="selectitem" class="form-control">
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
-                                                    <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
-                                                    <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
+                                                    <td><input type="text" name="hsn_sac[]" id="hsn_sca_number1" data-srno="1" class="form-control input-sm" /></td>
+                                                    <td><input type="text" name="quantity[]" id="item_qty1" data-srno="1" class="form-control input-sm quantity" /></td>
+                                                    <td><input type="text" name="uom[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
                                                     <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
                                                     <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
                                                     <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" readonly class="form-control input-sm order_item_final_amount" /></td>
@@ -175,8 +171,8 @@
 
 </html>
 <!-- end document-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- select-2 pulgin -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -195,31 +191,38 @@
             autoclose: true,
             showDropdowns: true,
         });
-        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        // fetch item name 
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("#selectitem").select2({
+            placeholder: 'Select an item',
             ajax: {
-                url: "getItemNames",
+                url: "{{route('GetItems')}}",
                 type: 'get',
-                dataType: 'json',
-                delay: 0,
+                delay: 250,
                 data: function(params) {
-                    console.log(params);
                     return {
-                        q: params.term // search term
+                        q: params.term, // search term
+                        page: params.page
                     };
                 },
                 processResults: function(data) {
-                    // parse the results into the format expected by Select2.
-                    // since we are using custom formatting functions we do not need to
-                    // alter the remote JSON data
                     return {
-                        results: data
+                        results: $.map(data, function(item) {
+                            // console.log(item);
+                            return {
+                                id: item.id,
+                                text: item.itemname
+
+                            }
+                        })
                     };
                 },
                 cache: false
             },
 
         });
+
+
 
     });
 </script>

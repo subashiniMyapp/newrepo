@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Items;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -48,14 +48,32 @@ class UsersController extends Controller
         Auth::logout();
         return redirect('login');
     }
-    public function getEmployees()
+    public function getItemNames(Request $request)
     {
+        $seachitem = $request->search;
+        //echo $seachitem;
+        // if ($seachitem == '') {
+        //     $itemnames = DB::select('select itemname from itemtable');
+        // } else {
+        //     $itemnames = DB::select('select itemname from itemtable where itemname like ' % $seachitem % '');
+        // }
+        // $response = array();
+        // foreach ($itemnames as $itemname) {
+        //     $response[] = array(
+        //         //"id" => $itemname->id,
+        //         "text" => $itemname->name
+        //     );
+        // }
+        // //print_r($response);
+        // return response()->json($response);
 
-        $employees = Items::orderby('id', 'asc')->select('*')->get();
-
-        // Fetch all records
-        $response['data'] = $employees;
-
-        return response()->json($response);
+        $itemnames = [];
+        if ($seachitem == '') {
+            $itemnames = DB::select('select id,itemname from itemtable');
+        } else {
+            $itemnames = DB::select('select id,itemname from itemtable where itemname like %' . $seachitem . '%');
+        }
+        //print_r($itemnames);
+        return response()->json($itemnames);
     }
 }
