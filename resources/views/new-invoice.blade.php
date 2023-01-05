@@ -20,6 +20,16 @@
         min-width: 12em !important;
 
     }
+
+    .hideme {
+        display: none;
+        visibility: hidden;
+    }
+
+    .showme {
+        display: inline;
+        visibility: visible;
+    }
 </style>
 
 <body class="animsition">
@@ -119,12 +129,12 @@
                                                         <select name="itemname" id="selectitem" class="form-control">
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name="hsn_sac[]" id="hsn_sca_number1" data-srno="1" class="form-control input-sm" /></td>
-                                                    <td><input type="text" name="quantity[]" id="item_qty1" data-srno="1" class="form-control input-sm quantity" /></td>
-                                                    <td><input type="text" name="uom[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
-                                                    <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
-                                                    <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" class="form-control input-sm order_item_final_amount" /></td>
-                                                    <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" readonly class="form-control input-sm order_item_final_amount" /></td>
+                                                    <td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number1" data-srno="1" class="form-control input-sm" /></td>
+                                                    <td><input type="text" name="item_quantity[]" id="item_qty1" data-srno="1" class="form-control input-sm item_quantity" /></td>
+                                                    <td><input type="text" name="item_uom[]" id="item_uom1" data-srno="1" class="form-control input-sm item_uom" /></td>
+                                                    <td><input type="text" name="item_price[]" id="item_price1" data-srno="1" class="form-control input-sm item_amount" /></td>
+                                                    <td><input type="text" name="item_discount_amount[]" id="item_discount1" data-srno="1" class="form-control input-sm item_discount" /></td>
+                                                    <td><input type="text" name="item_final_amount[]" id="item_final_amount1" data-srno="1" readonly class="form-control input-sm item_final_amount" /></td>
                                                 </tr>
                                             </table>
                                             <div class="text-right">
@@ -132,9 +142,32 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="text-right"><b>Total</td>
-                                        <td class="text-right"><b><span id="final_total_amt"></span></b></td>
+                                    <tr class="">
+                                        <td class="d-flex justify-content-end">
+                                            <table>
+                                                <tr class="">
+                                                    <td class="">Subtotal</td>
+                                                    <td class="">$100.00</td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td class="inputshow">CGST ( <input type="text" style="width: 15%;" class="hideme" id="show"> ) %</td>
+                                                    <td class="">$0.00</td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td class="inputshow">SGST ( <input type="text" style="width: 15%;" class="hideme" id="show"> ) %</td>
+                                                    <td class="">$7.00</td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td class="inputshow">IGST ( <input type="text" style="width: 15%;" class="hideme" id="show"> ) %</td>
+                                                    <td class="">$7.00</td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td>NetTotal</td>
+                                                    <td>$107.00</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
@@ -179,6 +212,20 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+    //var inputdata = document.getElementById('show');
+    var selectElement = document.getElementsByClassName('inputshow');
+    for (let i = 0; i < selectElement.length; i++) {
+        const element = selectElement[i];
+        const showInput = element.childElementCount;
+        console.log('hi');
+        // element.addEventListener('click', () => {
+        //     inputdata.classList.remove('hideme')
+        // });
+    }
+
+
+
+
     $(document).ready(function() {
         $('#order_date').datepicker({
             format: "dd-mm-yyyy",
@@ -212,15 +259,14 @@
                             return {
                                 id: item.id,
                                 text: item.itemname
-
                             }
                         })
                     };
                 },
                 cache: false
             },
-
         });
+
 
 
 
