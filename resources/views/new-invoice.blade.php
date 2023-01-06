@@ -29,6 +29,16 @@
     .showme {
         display: inline;
         visibility: visible;
+        /* display: block; */
+        width: 50px;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     }
 </style>
 
@@ -118,15 +128,14 @@
                                                     <th width="15%">HSN/SAC</th>
                                                     <th width="5%">Quantity</th>
                                                     <th width="15%">UOM</th>
-                                                    <th width="10%">Price</th>
-                                                    <th width="3%">Discount (%)</th>
+                                                    <th width="15%">Price</th>
+                                                    <th width="2%">Discount (%)</th>
                                                     <th width="12%">Total</th>
-                                                    <th width="2%" rowspan="2"></th>
                                                 </tr>
                                                 <tr>
                                                     <td><span id="sr_no">1</span></td>
                                                     <td>
-                                                        <select name="itemname" id="selectitem" class="form-control">
+                                                        <select name="itemname" id="selectitem1" data-srno="1" class="form-control items">
                                                         </select>
                                                     </td>
                                                     <td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number1" data-srno="1" class="form-control input-sm" /></td>
@@ -135,6 +144,7 @@
                                                     <td><input type="text" name="item_price[]" id="item_price1" data-srno="1" class="form-control input-sm item_amount" /></td>
                                                     <td><input type="text" name="item_discount_amount[]" id="item_discount1" data-srno="1" class="form-control input-sm item_discount" /></td>
                                                     <td><input type="text" name="item_final_amount[]" id="item_final_amount1" data-srno="1" readonly class="form-control input-sm item_final_amount" /></td>
+                                                    <td></td>
                                                 </tr>
                                             </table>
                                             <div class="text-right">
@@ -147,23 +157,23 @@
                                             <table>
                                                 <tr class="">
                                                     <td class="">Subtotal</td>
-                                                    <td class="">$100.00</td>
+                                                    <td id="final_subtotal">$100.00</td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td class="inputshow">CGST ( <input type="text" style="width: 15%;" class="hideme" id="show"> ) %</td>
-                                                    <td class="">$0.00</td>
+                                                    <td class="inputshow">CGST ( <input type="text" class="hideme" id="show"> ) %</td>
+                                                    <td id="cgst_tax">$0.00</td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td class="inputshow">SGST ( <input type="text" style="width: 15%;" class="hideme" id="show"> ) %</td>
-                                                    <td class="">$7.00</td>
+                                                    <td class="inputshow">SGST ( <input type="text" class="hideme" id="show"> ) %</td>
+                                                    <td id="sgst_tax">$7.00</td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td class="inputshow">IGST ( <input type="text" style="width: 15%;" class="hideme" id="show"> ) %</td>
-                                                    <td class="">$7.00</td>
+                                                    <td class="inputshow">IGST ( <input type="text" class="hideme" id="show"> ) %</td>
+                                                    <td id="igst_tax">$7.00</td>
                                                 </tr>
                                                 <tr class="">
                                                     <td>NetTotal</td>
-                                                    <td>$107.00</td>
+                                                    <td id="final_nettotal_amount">$107.00</td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -212,27 +222,26 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    //var inputdata = document.getElementById('show');
-    var selectElement = document.getElementsByClassName('inputshow');
-    for (let i = 0; i < selectElement.length; i++) {
-        const element = selectElement[i];
-        const showInput = element.childElementCount;
-        console.log('hi');
-        // element.addEventListener('click', () => {
-        //     inputdata.classList.remove('hideme')
-        // });
-    }
-
-
-
-
+    // show and hide tax fields
     $(document).ready(function() {
+        $('.inputshow').click(function() {
+            //alert('hi');
+            $(this).find('#show').each(function() {
+                if ($(this).hasClass('hideme')) {
+                    $(this).removeClass('hideme');
+                    $(this).toggleClass('showme');
+                }
+
+            });
+
+        });
+        // datepicker 1
         $('#order_date').datepicker({
             format: "dd-mm-yyyy",
             autoclose: true,
-
             showDropdowns: true,
         });
+        // datepicker 2
         $('#buyer_date').datepicker({
             format: "dd-mm-yyyy",
             autoclose: true,
@@ -240,7 +249,7 @@
         });
         // fetch item name 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $("#selectitem").select2({
+        $('select[name = "itemname"]').select2({
             placeholder: 'Select an item',
             ajax: {
                 url: "{{route('GetItems')}}",
@@ -265,6 +274,30 @@
                 },
                 cache: false
             },
+        });
+
+        const final_sub_total = $('#final_subtotal').text();
+        var count = 1;
+
+        $(document).on('click', '#add_row', function() {
+            count++;
+            $("#total_item").val(count);
+            var html_code = '';
+            html_code += '<tr id="row_id_' + count + '">';
+            html_code += '<td><span id="sr_no">' + count + '</span></td>';
+            html_code += '<td><select name = "itemname" id="selectitem' + count + '" data-srno = "' + count + '" class="form-control items"></select>';
+            html_code += '<td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number' + count + '" data-srno="' + count + '" class="form-control input-sm" /></td>';
+            html_code += '<td><input type="text" name="item_quantity[]" id="item_qty' + count + '" data-srno="' + count + '" class="form-control input-sm item_quantity" /></td>';
+            html_code += '<td><input type="text" name="item_uom[]" id="item_uom' + count + '" data-srno="' + count + '" class="form-control input-sm item_uom" /></td>';
+            html_code += '<td><input type="text" name="item_price[]" id="item_price' + count + '" data-srno="' + count + '" class="form-control input-sm item_amount" /></td>';
+            html_code += '<td><input type="text" name="item_discount_amount[]" id="item_discount' + count + '" data-srno="' + count + '" class="form-control input-sm item_discount" /></td>';
+            html_code += '<td><input type="text" name="item_final_amount[]" id="item_final_amount' + count + '" data-srno="' + count + '" readonly class="form-control input-sm item_final_amount"/></td>';
+            html_code += '<td><button type="button" name="remove_row" id="' + count + '" class="btn btn-danger btn-xs remove_row">X</button></td>';
+            html_code += '</tr>';
+            $('#invoice-item-table').append(html_code);
+        });
+        $(document).on('click', '.remove_row', function() {
+            $(this).closest('tr').remove();
         });
 
 
