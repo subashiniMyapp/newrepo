@@ -72,6 +72,8 @@
                             <div class="table-responsive">
                                 <h3 class="title-3 m-b-30">Create Invoice</h3>
                                 <hr>
+
+
                                 <table class="table table-bordered">
                                     <tr>
                                         <td colspan="2">
@@ -133,9 +135,10 @@
                                                     <th width="12%">Total</th>
                                                 </tr>
                                                 <tr>
+
                                                     <td><span id="sr_no">1</span></td>
                                                     <td>
-                                                        <select name="itemname" id="selectitem1" data-srno="1" class="form-control items">
+                                                        <select name="itemname[]" id="selectitem1" data-srno="1" class="form-control items_names">
                                                         </select>
                                                     </td>
                                                     <td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number1" data-srno="1" class="form-control input-sm" /></td>
@@ -160,16 +163,16 @@
                                                     <td id="final_subtotal">$100.00</td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td class="inputshow">CGST ( <input type="text" class="hideme" id="show"> ) %</td>
-                                                    <td id="cgst_tax">$0.00</td>
+                                                    <td class="inputshow">CGST (%)</td>
+                                                    <td id="cgst_tax" contentEditable="true">10</td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td class="inputshow">SGST ( <input type="text" class="hideme" id="show"> ) %</td>
-                                                    <td id="sgst_tax">$7.00</td>
+                                                    <td class="inputshow">SGST (%)</td>
+                                                    <td id="sgst_tax" contentEditable="true">8</td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td class="inputshow">IGST ( <input type="text" class="hideme" id="show"> ) %</td>
-                                                    <td id="igst_tax">$7.00</td>
+                                                    <td class="inputshow">IGST (%)</td>
+                                                    <td id="igst_tax" contentEditable="true">6</td>
                                                 </tr>
                                                 <tr class="">
                                                     <td>NetTotal</td>
@@ -224,17 +227,17 @@
 <script>
     // show and hide tax fields
     $(document).ready(function() {
-        $('.inputshow').click(function() {
-            //alert('hi');
-            $(this).find('#show').each(function() {
-                if ($(this).hasClass('hideme')) {
-                    $(this).removeClass('hideme');
-                    $(this).toggleClass('showme');
-                }
+        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        // $.ajax({
+        //     url: "{{route('GetItems')}}",
+        //     type: 'get',
+        //     dataType: 'html',
+        //     success: function(response) {
+        //         console.log(response);
+        //         $('select["name=itemname[]"]').html(response);
+        //     }
+        // });
 
-            });
-
-        });
         // datepicker 1
         $('#order_date').datepicker({
             format: "dd-mm-yyyy",
@@ -248,32 +251,10 @@
             showDropdowns: true,
         });
         // fetch item name 
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $('select[name = "itemname"]').select2({
+        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('.items_names').select2({
             placeholder: 'Select an item',
-            ajax: {
-                url: "{{route('GetItems')}}",
-                type: 'get',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        q: params.term, // search term
-                        page: params.page
-                    };
-                },
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(item) {
-                            // console.log(item);
-                            return {
-                                id: item.id,
-                                text: item.itemname
-                            }
-                        })
-                    };
-                },
-                cache: false
-            },
+
         });
 
         const final_sub_total = $('#final_subtotal').text();
@@ -285,7 +266,7 @@
             var html_code = '';
             html_code += '<tr id="row_id_' + count + '">';
             html_code += '<td><span id="sr_no">' + count + '</span></td>';
-            html_code += '<td><select name = "itemname" id="selectitem' + count + '" data-srno = "' + count + '" class="form-control items"></select>';
+            html_code += '<td><select name = "itemname[]"  id="selectitem' + count + '" data-srno = "' + count + '" class="form-control items_names"></select>';
             html_code += '<td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number' + count + '" data-srno="' + count + '" class="form-control input-sm" /></td>';
             html_code += '<td><input type="text" name="item_quantity[]" id="item_qty' + count + '" data-srno="' + count + '" class="form-control input-sm item_quantity" /></td>';
             html_code += '<td><input type="text" name="item_uom[]" id="item_uom' + count + '" data-srno="' + count + '" class="form-control input-sm item_uom" /></td>';
@@ -295,6 +276,20 @@
             html_code += '<td><button type="button" name="remove_row" id="' + count + '" class="btn btn-danger btn-xs remove_row">X</button></td>';
             html_code += '</tr>';
             $('#invoice-item-table').append(html_code);
+
+            $('.items_names').select2({
+                placeholder: 'Select an item',
+            });
+
+            // $.ajax({
+            //     url: "{{route('GetItems')}}",
+            //     type: 'get',
+            //     dataType: 'html',
+            //     success: function(response) {
+            //         //console.log(response);
+            //         $('select["name=itemname[]"]').html(response);
+            //     }
+            // });
         });
         $(document).on('click', '.remove_row', function() {
             $(this).closest('tr').remove();

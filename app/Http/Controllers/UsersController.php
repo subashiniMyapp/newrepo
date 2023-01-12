@@ -48,32 +48,31 @@ class UsersController extends Controller
         Auth::logout();
         return redirect('login');
     }
-    public function getItemNames(Request $request)
+    public function getItemNames()
     {
-        $seachitem = $request->search;
-        //echo $seachitem;
-        // if ($seachitem == '') {
-        //     $itemnames = DB::select('select itemname from itemtable');
-        // } else {
-        //     $itemnames = DB::select('select itemname from itemtable where itemname like ' % $seachitem % '');
-        // }
-        // $response = array();
-        // foreach ($itemnames as $itemname) {
-        //     $response[] = array(
-        //         //"id" => $itemname->id,
-        //         "text" => $itemname->name
-        //     );
-        // }
-        // //print_r($response);
-        // return response()->json($response);
-
-        $itemnames = [];
-        if ($seachitem == '') {
-            $itemnames = DB::select('select id,itemname from itemtable');
-        } else {
-            $itemnames = DB::select('select id,itemname from itemtable where itemname like %' . $seachitem . '%');
-        }
+        $itemnames = DB::table('itemtable')->get();
         //print_r($itemnames);
-        return response()->json($itemnames);
+        //return view('new-invoice', compact('itemnames'));
+        //return (View::make("user/regprofile", compact('student')));
+        // return View::make("new-invoice")->with($itemnames);
+
+        //return view('new-invoice')->with('itemnames', $itemnames);
+        //echo '<pre>';
+        //print_r($itemnames);
+
+        // foreach ($itemnames as $itemname) {
+        //     //print_r($itemname);
+        //     foreach ($itemname as $name) {
+        //         //print_r($name);
+        //         $arrval[] = $name;
+        //     }
+        // }
+        // echo '<pre>';
+        // print_r($arrval);
+        // // print_r($name);
+        // $arr = $arrval;
+        //return view("new-invoice", compact('arr'));
+        //print_r($itemnames);
+        return view('new-invoice', ['itemnames' => $itemnames]);
     }
 }
