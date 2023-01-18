@@ -39,7 +39,8 @@ class UsersController extends Controller
     }
     public function addBill()
     {
-        return view('new-invoice');
+        //return view('new-invoice');
+        return view('new-invoice', ['users' => DB::table('itemtable')->get()]);
     }
 
     public function singOut()
@@ -73,6 +74,7 @@ class UsersController extends Controller
         // $arr = $arrval;
         //return view("new-invoice", compact('arr'));
         //print_r($itemnames);
-        return view('new-invoice', ['itemnames' => $itemnames]);
+        //return view('New-invoice', ['users' => DB::table('itemtable')->get()]);
+        //return view('user.index', ['users' => DB::table('users')->paginate(15)]);
     }
 }

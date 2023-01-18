@@ -71,9 +71,8 @@
                         <form action="" method="post" id="invoice_form">
                             <div class="table-responsive">
                                 <h3 class="title-3 m-b-30">Create Invoice</h3>
+
                                 <hr>
-
-
                                 <table class="table table-bordered">
                                     <tr>
                                         <td colspan="2">
@@ -139,6 +138,10 @@
                                                     <td><span id="sr_no">1</span></td>
                                                     <td>
                                                         <select name="itemname[]" id="selectitem1" data-srno="1" class="form-control items_names">
+                                                            <option value="" selected disabled>Select Item Name</option>
+                                                            @foreach($users as $user)
+                                                            <option value="{{$user->id}}">{{$user->itemname}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </td>
                                                     <td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number1" data-srno="1" class="form-control input-sm" /></td>
@@ -266,7 +269,7 @@
             var html_code = '';
             html_code += '<tr id="row_id_' + count + '">';
             html_code += '<td><span id="sr_no">' + count + '</span></td>';
-            html_code += '<td><select name = "itemname[]"  id="selectitem' + count + '" data-srno = "' + count + '" class="form-control items_names"></select>';
+            html_code += '<td><select name = "itemname[]"  id="selectitem' + count + '" data-srno = "' + count + '" class="form-control items_names"> <option value="" selected disabled>Select Item Name</option> @foreach($users as $user)<option value="{{$user->id}}">{{$user->itemname}}</option>@endforeach</select>';
             html_code += '<td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number' + count + '" data-srno="' + count + '" class="form-control input-sm" /></td>';
             html_code += '<td><input type="text" name="item_quantity[]" id="item_qty' + count + '" data-srno="' + count + '" class="form-control input-sm item_quantity" /></td>';
             html_code += '<td><input type="text" name="item_uom[]" id="item_uom' + count + '" data-srno="' + count + '" class="form-control input-sm item_uom" /></td>';
