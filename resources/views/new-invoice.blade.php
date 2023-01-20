@@ -96,11 +96,12 @@
                                                     <h5>Buyer's Order Date :<input type="text" name="" id="buyer_date" class="customstyle" style="margin-left : 5px;"></h5>
                                                     <h5>Mode of payment :
                                                         <select name="" id="" class="customstyle" style="margin-left : 11px;">
-                                                            <option>Cash</option>
-                                                            <option>Card</option>
+                                                            <option value="cash">Cash</option>
+                                                            <option value="bank">Bank transfer</option>
+                                                            <option value="online">online</option>
                                                         </select>
                                                     </h5>
-                                                    <h5>Delivery Note :<input type="text" name="" id="" class="customstyle" style="margin-left : 46px;"></h5>
+                                                    <!-- <h5>Delivery Note :<input type="text" name="" id="" class="customstyle" style="margin-left : 46px;"></h5> -->
                                                 </div>
                                             </div>
                                             <hr>
@@ -160,10 +161,10 @@
                                     </tr>
                                     <tr class="">
                                         <td class="d-flex justify-content-end">
-                                            <table>
+                                            <table style="margin-right:5rem;">
                                                 <tr class="">
-                                                    <td class="">Subtotal</td>
-                                                    <td id="final_subtotal">$100.00</td>
+                                                    <td class="">Subtotal (Rs.) </td>
+                                                    <td id="final_subtotal">100.00</td>
                                                 </tr>
                                                 <tr class="">
                                                     <td class="inputshow">CGST (%)</td>

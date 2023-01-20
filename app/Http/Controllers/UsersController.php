@@ -49,32 +49,8 @@ class UsersController extends Controller
         Auth::logout();
         return redirect('login');
     }
-    public function getItemNames()
+    public function addItemNamespage()
     {
-        $itemnames = DB::table('itemtable')->get();
-        //print_r($itemnames);
-        //return view('new-invoice', compact('itemnames'));
-        //return (View::make("user/regprofile", compact('student')));
-        // return View::make("new-invoice")->with($itemnames);
-
-        //return view('new-invoice')->with('itemnames', $itemnames);
-        //echo '<pre>';
-        //print_r($itemnames);
-
-        // foreach ($itemnames as $itemname) {
-        //     //print_r($itemname);
-        //     foreach ($itemname as $name) {
-        //         //print_r($name);
-        //         $arrval[] = $name;
-        //     }
-        // }
-        // echo '<pre>';
-        // print_r($arrval);
-        // // print_r($name);
-        // $arr = $arrval;
-        //return view("new-invoice", compact('arr'));
-        //print_r($itemnames);
-        //return view('New-invoice', ['users' => DB::table('itemtable')->get()]);
-        //return view('user.index', ['users' => DB::table('users')->paginate(15)]);
+        return view('add-items');
     }
 }

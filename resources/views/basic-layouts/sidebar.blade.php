@@ -15,7 +15,7 @@
                     <i class="fas fa-chart-bar"></i>List of Invioce</a>
             </li>
             <li>
-                <a href="{{route('New-invoice')}}">
+                <a href="{{route('AddItem')}}">
                     <i class="fas fa-table"></i>add new items</a>
             </li>
             <li>
