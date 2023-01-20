@@ -150,12 +150,12 @@
                                                     <td><input type="text" name="item_price[]" id="item_price1" data-srno="1" class="form-control input-sm item_amount" /></td>
                                                     <td><input type="text" name="item_discount_amount[]" id="item_discount1" data-srno="1" class="form-control input-sm item_discount" /></td>
                                                     <td><input type="text" name="item_final_amount[]" id="item_final_amount1" data-srno="1" readonly class="form-control input-sm item_final_amount" /></td>
-                                                    <td></td>
+                                                    <td><button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs mt-2">+</button></td>
                                                 </tr>
                                             </table>
-                                            <div class="text-right">
+                                            <!-- <div class="text-right">
                                                 <button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs mt-2">+</button>
-                                            </div>
+                                            </div> -->
                                         </td>
                                     </tr>
                                     <tr class="">
@@ -253,10 +253,9 @@
             autoclose: true,
             showDropdowns: true,
         });
-        // fetch item name 
+
         //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('.items_names').select2({
-            placeholder: 'Select an item',
 
         });
 
