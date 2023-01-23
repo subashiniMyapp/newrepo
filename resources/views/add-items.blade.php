@@ -8,6 +8,25 @@
     <!-- Title Page-->
     <title>My First Page</title>
 </head>
+<style>
+    /* TWO */
+    .custom-field.two input {
+        border-radius: 0;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        background:
+            linear-gradient(90deg, #222, #222) center bottom/0 0.15em no-repeat,
+            linear-gradient(90deg, #ccc, #ccc) left bottom/100% 0.15em no-repeat,
+            linear-gradient(90deg, #fafafa, #fafafa) left bottom/100% no-repeat;
+        transition: background-size 0.3s ease;
+    }
+
+    .custom-field.two input.dirty,
+    .custom-field.two input:not(:placeholder-shown),
+    .custom-field.two input:focus {
+        background-size: 100% 0.15em, 100% 0.1em, 100%;
+    }
+</style>
 
 <body class="animsition">
     <div class="page-wrapper">
@@ -35,22 +54,22 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header text-center">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" id='closebtn' data-dismiss=" modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <form action="" method="post" id='addForm'>
                             <div class="modal-body mx-3">
                                 <div class="md-form mb-4">
-                                    <h4 class="mb-2">Enter item name</h4>
-                                    <input type="text" id="defaultForm-email" class="form-control validate">
+                                    <p class="mb-2">Enter item name</p>
+                                    <input type="text" id="defaultForm-email" class="form-control validate ">
                                 </div>
                                 <div class="md-form mb-3">
-                                    <h4 class="md-form mb-2">Enter item description (If any)</h4>
+                                    <p class="md-form mb-2">Enter item description (If any)</p>
                                     <input type="text" id="defaultForm-pass" class="form-control validate">
                                 </div>
                                 <div class="md-form mb-3">
-                                    <h4 class="md-form mb-2">Enter item uom</h4>
+                                    <p class="md-form mb-2">Enter item uom</p>
                                     <input type="text" id="defaultForm-pass" class="form-control validate">
                                 </div>
                             </div>
@@ -81,8 +100,9 @@
                                                 <i class="zmdi zmdi-plus"></i>add item</button>
                                         </div>
                                     </div>
+
                                     <div class="table-responsive m-b-40">
-                                        <table class="table table-borderless table-data3">
+                                        <table class="table table-borderless table-data3 itemtable">
                                             <thead>
                                                 <tr>
                                                     <th>Sr.no</th>
@@ -93,23 +113,108 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>2018-09-29 05:57</td>
+                                                    <td>01</td>
                                                     <td>Mobile</td>
                                                     <td>iPhone X 64Gb Grey</td>
                                                     <td class="process">Processed</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>2018-09-28 01:22</td>
+                                                    <td>02</td>
                                                     <td>Mobile</td>
                                                     <td>Samsung S8 Black</td>
                                                     <td class="process">Processed</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>2018-09-27 02:12</td>
+                                                    <td>03</td>
                                                     <td>Game</td>
                                                     <td>Game Console Controller</td>
                                                     <td class="denied">Denied</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03</td>
+                                                    <td>Game</td>
+                                                    <td>Game Console Controller</td>
+                                                    <td class="denied">Denied</td>
+                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -138,11 +243,43 @@
 
 </html>
 <!-- end document-->
+
 <script>
     $(document).ready(function() {
+        $('.itemtable').DataTable({
+            info: false,
+            //pagingType: 'simple',
+            pagingType: 'full',
+            language: {
+                paginate: {
+                    first: '<<',
+                    previous: "<",
+                    next: ">",
+                    last: '>>'
+                },
+                aria: {
+                    paginate: {
+                        first: 'First',
+                        previous: 'Previous',
+                        next: 'Next',
+                        last: 'Last'
+                    }
+                }
+            }
+        });
+        // hide popup model
+        $('#closebtn').on('click', function() {
+            //alert('reset');
+            $('#addForm')[0].reset();
+            $("#modalLoginForm").modal("hide");
+            //e.preventDefault();
+        });
+
+        // reset popup model
         $('#form-reset').on('click', function(e) {
-            alert('reset');
-            //$('#myModal input').val("");
+            //alert('reset');
+            $('#addForm')[0].reset();
+            //$("#modalLoginForm").modal("hide");
             e.preventDefault();
         });
     });

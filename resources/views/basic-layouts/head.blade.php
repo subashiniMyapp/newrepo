@@ -26,3 +26,4 @@
  <!-- Main CSS-->
  <link href="css/theme.css" rel="stylesheet" media="all">
  <!-- Date Picker -->
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
