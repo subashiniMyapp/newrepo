@@ -141,7 +141,8 @@
 <script>
     $(document).ready(function() {
         $('#form-reset').on('click', function(e) {
-            $('#myModal').find('#addForm').trigger('reset');
+            alert('reset');
+            //$('#myModal input').val("");
             e.preventDefault();
         });
     });
