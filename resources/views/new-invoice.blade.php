@@ -20,26 +20,6 @@
         min-width: 12em !important;
 
     }
-
-    .hideme {
-        display: none;
-        visibility: hidden;
-    }
-
-    .showme {
-        display: inline;
-        visibility: visible;
-        /* display: block; */
-        width: 50px;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    }
 </style>
 
 <body class="animsition">

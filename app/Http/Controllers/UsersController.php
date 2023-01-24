@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 
 class UsersController extends Controller
 {
@@ -52,5 +54,18 @@ class UsersController extends Controller
     public function addItemNamespage()
     {
         return view('add-items');
+    }
+
+    public function saveItem(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'itemname' => 'required|max:100',
+            'uom' => 'required',
+        ]);
+        if ($validated->failed()) {
+
+            return response()->json(['error' => $validated->errors()]);
+        }
+        //return redirect('register')->withErrors($validated, 'login');
     }
 }

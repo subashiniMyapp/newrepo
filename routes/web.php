@@ -22,3 +22,4 @@ Route::get('/New-invoice', [UsersController::class, 'addBill'])->name('New-invoi
 Route::get('/singOut', [UsersController::class, 'singOut'])->name('singOut');
 Route::get('GetItems', [UsersController::class, 'getItemNames'])->name('GetItems');
 Route::get('/AddItem', [UsersController::class, 'addItemNamespage'])->name('AddItem');
+Route::post('SaveItem', [UsersController::class, 'saveItem'])->name('SaveItem');

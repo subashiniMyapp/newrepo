@@ -9,22 +9,13 @@
     <title>My First Page</title>
 </head>
 <style>
-    /* TWO */
-    .custom-field.two input {
-        border-radius: 0;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        background:
-            linear-gradient(90deg, #222, #222) center bottom/0 0.15em no-repeat,
-            linear-gradient(90deg, #ccc, #ccc) left bottom/100% 0.15em no-repeat,
-            linear-gradient(90deg, #fafafa, #fafafa) left bottom/100% no-repeat;
-        transition: background-size 0.3s ease;
+    .dataTables_filter input {
+        border-radius: 5px;
+        box-shadow: none !important;
     }
 
-    .custom-field.two input.dirty,
-    .custom-field.two input:not(:placeholder-shown),
-    .custom-field.two input:focus {
-        background-size: 100% 0.15em, 100% 0.1em, 100%;
+    .errorClass {
+        border: 1px solid red;
     }
 </style>
 
@@ -54,28 +45,43 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header text-center">
+                            <h4 id='modelheading'></h4>
                             <button type="button" class="close" id='closebtn' data-dismiss=" modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        <!-- @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif -->
                         <form action="" method="post" id='addForm'>
+
+                            <input type="hidden" name="product_id" id="product_id">
                             <div class="modal-body mx-3">
                                 <div class="md-form mb-4">
                                     <p class="mb-2">Enter item name</p>
-                                    <input type="text" id="defaultForm-email" class="form-control validate ">
+                                    <input type="text" name="itemname" id="Itemname" class="form-control validate ">
+                                    <span id='erroritem' class="text-danger"></span>
                                 </div>
                                 <div class="md-form mb-3">
                                     <p class="md-form mb-2">Enter item description (If any)</p>
-                                    <input type="text" id="defaultForm-pass" class="form-control validate">
+                                    <input type="text" name="description" id="description" class="form-control validate">
                                 </div>
                                 <div class="md-form mb-3">
                                     <p class="md-form mb-2">Enter item uom</p>
-                                    <input type="text" id="defaultForm-pass" class="form-control validate">
+                                    <input type="text" name="uom" id="Itemuom" class="form-control validate">
+                                    <span id='erroruom' class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="modal-footer d-flex justify-content-between">
                                 <button class="btn btn-info" id='form-reset'>Reset</button>
-                                <button class="btn btn-success" name='submit' type="submit">Save</button>
+                                <button class="btn btn-success" name='submit' id='saveBtn' type="submit">Save</button>
                             </div>
                         </form>
                     </div>
@@ -96,7 +102,7 @@
                                             </div>
                                         </div>
                                         <div class="table-data__tool-right">
-                                            <button class="au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" data-target="#modalLoginForm">
+                                            <button class="au-btn au-btn-icon au-btn--green au-btn--small" id="createNewItem" data-toggle="modal" data-target="#modalLoginForm">
                                                 <i class="zmdi zmdi-plus"></i>add item</button>
                                         </div>
                                     </div>
@@ -267,6 +273,14 @@
                 }
             }
         });
+        // show popup model
+        $('#createNewItem').click(function() {
+            $('#saveBtn').val("create-product");
+            $('#product_id').val('');
+            $('#addForm').trigger("reset");
+            $('#modelheading').text("Create New Item");
+            //$('#ajaxModel').modal('show');
+        });
         // hide popup model
         $('#closebtn').on('click', function() {
             //alert('reset');
@@ -282,5 +296,39 @@
             //$("#modalLoginForm").modal("hide");
             e.preventDefault();
         });
-    });
+
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $("#addForm").submit(function(e) {
+            e.preventDefault();
+
+            $('#saveBtn').html('Sending...');
+            $.ajax({
+                data: $(this).serialize(),
+                url: "{{ route('SaveItem') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    // $('#productForm').trigger("reset");
+                    // $('#ajaxModel').modal('hide');
+                    // table.draw();
+
+                },
+                error: function(data) {
+                    console.log('Error:', data);
+                    //$('#saveBtn').html('Save Changes');
+                    // var errors = data.responseText;
+
+                    // console.log(errors);
+
+                }
+            });
+        });
+
+    })
 </script>
