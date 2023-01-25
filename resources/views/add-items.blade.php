@@ -14,8 +14,8 @@
         box-shadow: none !important;
     }
 
-    .errorClass {
-        border: 1px solid red;
+    ul#save_msgList {
+        margin: 8px 20px;
     }
 </style>
 
@@ -50,16 +50,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <!-- @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif -->
+                        <ul id="save_msgList"></ul>
                         <form action="" method="post" id='addForm'>
 
                             <input type="hidden" name="product_id" id="product_id">
@@ -118,108 +109,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>01</td>
-                                                    <td>Mobile</td>
-                                                    <td>iPhone X 64Gb Grey</td>
-                                                    <td class="process">Processed</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>02</td>
-                                                    <td>Mobile</td>
-                                                    <td>Samsung S8 Black</td>
-                                                    <td class="process">Processed</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Game</td>
-                                                    <td>Game Console Controller</td>
-                                                    <td class="denied">Denied</td>
-                                                </tr>
 
                                             </tbody>
                                         </table>
@@ -297,34 +186,45 @@
             e.preventDefault();
         });
 
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         $("#addForm").submit(function(e) {
             e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-            $('#saveBtn').html('Sending...');
+            var data = $(this).serialize();
+            //console.log(data);
             $.ajax({
-                data: $(this).serialize(),
+                data: data,
                 url: "{{ route('SaveItem') }}",
                 type: "POST",
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data);
-                    // $('#productForm').trigger("reset");
-                    // $('#ajaxModel').modal('hide');
-                    // table.draw();
+                //dataType: 'json',
+                success: function(response) {
+                    //alert(data);
+                    //console.log(response.status);
+                    var msghtml = "";
+                    if (response.status == 400) {
+                        //console.log(data.errors);save_msgList
+                        $('#save_msgList').html("");
+                        $('#save_msgList').addClass('alert alert-danger');
+                        $.each(response.errors, function(key, err_value) {
+                            $('#save_msgList').append('<li>' + err_value + '</li>');
+                        });
+                        $("#modalLoginForm").modal("show");
+                    } else if (response.status == 200) {
+                        $('#addForm')[0].reset();
+                        $('#save_msgList').html("");
+                        $('#save_msgList').removeClass('alert alert-danger');
+                        $("#modalLoginForm").modal("hide");
+                        Swal.fire(
+                            'Good job!',
+                            'Your Item Name Added succssfully',
+                            'success'
+                        )
 
-                },
-                error: function(data) {
-                    console.log('Error:', data);
-                    //$('#saveBtn').html('Save Changes');
-                    // var errors = data.responseText;
-
-                    // console.log(errors);
+                    }
 
                 }
             });

@@ -58,14 +58,23 @@ class UsersController extends Controller
 
     public function saveItem(Request $request)
     {
+
         $validated = Validator::make($request->all(), [
             'itemname' => 'required|max:100',
             'uom' => 'required',
         ]);
-        if ($validated->failed()) {
+        //return response()->json($validated->errors());
+        if ($validated->fails()) {
 
-            return response()->json(['error' => $validated->errors()]);
+            return response()->json([
+                "errors" => $validated->errors(),
+                "status" => 400
+            ]);
+        } else {
+            return response()->json([
+                "success" => "Item Name added successfully",
+                "status" => 200
+            ]);
         }
-        //return redirect('register')->withErrors($validated, 'login');
     }
 }
