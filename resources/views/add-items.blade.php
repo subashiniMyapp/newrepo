@@ -105,7 +105,7 @@
                                                     <th>Sr.no</th>
                                                     <th>Item name</th>
                                                     <th>Unit of mesure(UOM)</th>
-                                                    <th>Action</th>
+                                                    <th rowspan="2">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -141,9 +141,32 @@
 
 <script>
     $(document).ready(function() {
+
+        fetchItemNames();
+
+        function fetchItemNames() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route ('GetItems') }}",
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                    $('tbody').html("");
+                    $.each(response.itemnames, function(key, item) {
+                        $('tbody').append('<tr>\
+                            <td>' + item.id + '</td>\
+                            <td>' + item.itemname + '</td>\
+                            <td>' + item.uom + '</td>\
+                            <td><button type="button" value="' + item.id + '" class="btn btn-primary editbtn btn-sm">Edit</button></td>\
+                            <td><button type="button" value="' + item.id + '" class="btn btn-danger deletebtn btn-sm">Delete</button></td>\
+                        \</tr>');
+                    });
+                }
+            });
+        }
+
         $('.itemtable').DataTable({
             info: false,
-            //pagingType: 'simple',
             pagingType: 'full',
             language: {
                 paginate: {
@@ -175,6 +198,8 @@
             //alert('reset');
             $('#addForm')[0].reset();
             $("#modalLoginForm").modal("hide");
+            $('#save_msgList').html("");
+            $('#save_msgList').removeClass('alert alert-danger');
             //e.preventDefault();
         });
 
@@ -182,6 +207,8 @@
         $('#form-reset').on('click', function(e) {
             //alert('reset');
             $('#addForm')[0].reset();
+            $('#save_msgList').html("");
+            $('#save_msgList').removeClass('alert alert-danger');
             //$("#modalLoginForm").modal("hide");
             e.preventDefault();
         });
@@ -193,7 +220,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
             var data = $(this).serialize();
             //console.log(data);
             $.ajax({

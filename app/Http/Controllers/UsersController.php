@@ -55,7 +55,13 @@ class UsersController extends Controller
     {
         return view('add-items');
     }
-
+    public function getItemNames()
+    {
+        $itemnames = DB::table('itemtable')->latest()->get();
+        return response()->json([
+            'itemnames' => $itemnames,
+        ]);
+    }
     public function saveItem(Request $request)
     {
 
