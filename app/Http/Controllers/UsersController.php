@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+//use DataTables;
+use Yajra\DataTables\Datatables;
 
 class UsersController extends Controller
 {
@@ -51,16 +52,35 @@ class UsersController extends Controller
         Auth::logout();
         return redirect('login');
     }
-    public function addItemNamespage()
+    public function addItemNamespage(Request $request)
     {
+        if ($request->ajax()) {
+
+            $itemnames = DB::table('itemtable')->latest()->get();
+            return DataTables::of($itemnames)->addIndexColumn()->addColumn('action', function ($row) {
+                $actionBtn = '<div class="table-data-feature">
+                <a class="item" data-toggle="tooltip" data-placement="top" title="view">
+                <i class="zmdi zmdi-eye"></i>
+                </a>
+                <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                    <i class="zmdi zmdi-edit"></i>
+                </button>
+                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <i class="zmdi zmdi-delete"></i>
+                </button>';
+                return $actionBtn;
+            })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
         return view('add-items');
     }
     public function getItemNames()
     {
-        $itemnames = DB::table('itemtable')->latest()->get();
-        return response()->json([
-            'itemnames' => $itemnames,
-        ]);
+        // return response()->json([
+        //     'itemnames' => $itemnames,
+        // ]);
     }
     public function saveItem(Request $request)
     {

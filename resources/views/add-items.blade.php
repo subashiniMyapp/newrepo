@@ -105,10 +105,10 @@
                                                     <th>Sr.no</th>
                                                     <th>Item name</th>
                                                     <th>Unit of mesure(UOM)</th>
-                                                    <th rowspan="2">Action</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="mytable">
 
                                             </tbody>
                                         </table>
@@ -145,46 +145,52 @@
         fetchItemNames();
 
         function fetchItemNames() {
-            $.ajax({
-                type: "GET",
-                url: "{{ route ('GetItems') }}",
-                dataType: "json",
-                success: function(response) {
-                    console.log(response);
-                    $('tbody').html("");
-                    $.each(response.itemnames, function(key, item) {
-                        $('tbody').append('<tr>\
-                            <td>' + item.id + '</td>\
-                            <td>' + item.itemname + '</td>\
-                            <td>' + item.uom + '</td>\
-                            <td><button type="button" value="' + item.id + '" class="btn btn-primary editbtn btn-sm">Edit</button></td>\
-                            <td><button type="button" value="' + item.id + '" class="btn btn-danger deletebtn btn-sm">Delete</button></td>\
-                        \</tr>');
-                    });
-                }
+            $('.itemtable').DataTable({
+                info: false,
+                pagingType: 'full',
+                language: {
+                    paginate: {
+                        first: '<<',
+                        previous: "<",
+                        next: ">",
+                        last: '>>'
+                    },
+                    aria: {
+                        paginate: {
+                            first: 'First',
+                            previous: 'Previous',
+                            next: 'Next',
+                            last: 'Last'
+                        }
+                    }
+                },
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route ('AddItem') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'itemname',
+                        name: 'itemname'
+                    },
+                    {
+                        data: 'uom',
+                        name: 'uom'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true,
+
+                    },
+                ],
+
+
             });
         }
-
-        $('.itemtable').DataTable({
-            info: false,
-            pagingType: 'full',
-            language: {
-                paginate: {
-                    first: '<<',
-                    previous: "<",
-                    next: ">",
-                    last: '>>'
-                },
-                aria: {
-                    paginate: {
-                        first: 'First',
-                        previous: 'Previous',
-                        next: 'Next',
-                        last: 'Last'
-                    }
-                }
-            }
-        });
         // show popup model
         $('#createNewItem').click(function() {
             $('#saveBtn').val("create-product");
