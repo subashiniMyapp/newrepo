@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Itemnames extends Model
 {
     use HasFactory;
+    protected $table = 'itemtable';
     protected $fillable = [
-        'itemname'
+        'itemname',
+        'description',
+        'uom'
     ];
 }

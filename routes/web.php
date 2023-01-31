@@ -23,4 +23,6 @@ Route::get('/singOut', [UsersController::class, 'singOut'])->name('singOut');
 Route::get('GetItems', [UsersController::class, 'getItemNames'])->name('GetItems');
 Route::get('/AddItem', [UsersController::class, 'addItemNamespage'])->name('AddItem');
 Route::post('SaveItem', [UsersController::class, 'saveItem'])->name('SaveItem');
-Route::get('/Demo', [UsersController::class, 'emailTem'])->name('Demo');
+Route::get('/showData/{id}', [UsersController::class, 'getDataById'])->name('showData');
+Route::post('UpdateItem', [UsersController::class, 'updateItem'])->name('UpdateItem');
+Route::get('/DeleteItem/{id}', [UsersController::class, 'destroy'])->name('DeleteItem');

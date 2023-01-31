@@ -142,55 +142,52 @@
 <script>
     $(document).ready(function() {
 
-        fetchItemNames();
-
-        function fetchItemNames() {
-            $('.itemtable').DataTable({
-                info: false,
-                pagingType: 'full',
-                language: {
-                    paginate: {
-                        first: '<<',
-                        previous: "<",
-                        next: ">",
-                        last: '>>'
-                    },
-                    aria: {
-                        paginate: {
-                            first: 'First',
-                            previous: 'Previous',
-                            next: 'Next',
-                            last: 'Last'
-                        }
-                    }
+        $('.itemtable').DataTable({
+            info: false,
+            pagingType: 'full',
+            language: {
+                paginate: {
+                    first: '<<',
+                    previous: "<",
+                    next: ">",
+                    last: '>>'
                 },
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route ('AddItem') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'itemname',
-                        name: 'itemname'
-                    },
-                    {
-                        data: 'uom',
-                        name: 'uom'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true,
+                aria: {
+                    paginate: {
+                        first: 'First',
+                        previous: 'Previous',
+                        next: 'Next',
+                        last: 'Last'
+                    }
+                }
+            },
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route ('AddItem') }}",
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'itemname',
+                    name: 'itemname'
+                },
+                {
+                    data: 'uom',
+                    name: 'uom'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true,
 
-                    },
-                ],
+                },
+            ],
 
 
-            });
-        }
+        });
+
         // show popup model
         $('#createNewItem').click(function() {
             $('#saveBtn').val("create-product");
@@ -228,14 +225,21 @@
             });
             var data = $(this).serialize();
             //console.log(data);
+            var action_url = '';
+            if ($('#saveBtn').val() == "create-product") {
+                action_url = "{{ route('SaveItem') }}";
+            }
+            if ($('#saveBtn').val() == "update-product") {
+                action_url = "{{ route('UpdateItem') }}";
+            }
             $.ajax({
                 data: data,
-                url: "{{ route('SaveItem') }}",
+                url: action_url,
                 type: "POST",
                 //dataType: 'json',
                 success: function(response) {
                     //alert(data);
-                    //console.log(response.status);
+                    //console.log(response);
                     var msghtml = "";
                     if (response.status == 400) {
                         //console.log(data.errors);save_msgList
@@ -250,9 +254,10 @@
                         $('#save_msgList').html("");
                         $('#save_msgList').removeClass('alert alert-danger');
                         $("#modalLoginForm").modal("hide");
+                        $('.itemtable').DataTable().ajax.reload();
                         Swal.fire(
                             'Good job!',
-                            'Your Item Name Added succssfully',
+                            response.success,
                             'success'
                         )
 
@@ -262,5 +267,58 @@
             });
         });
 
-    })
+        // Edit popup function
+        $(document).on('click', '.edit', function() {
+            var item_id = $(this).attr('id');
+            //console.log(id);
+            $.ajax({
+                type: "GET",
+                url: "/showData/" + item_id,
+                dataType: "json",
+                success: function(response) {
+                    //console.log(response);
+                    if (response.status == 200) {
+                        $('#Itemname').val(response.result.itemname);
+                        $('#description').val(response.result.description);
+                        $('#Itemuom').val(response.result.uom);
+                        $('#product_id').val(item_id);
+                        $('#modelheading').text('Edit Item Name');
+                        $('#saveBtn').val('update-product');
+                        $('#modalLoginForm').modal('show');
+                    }
+                }
+            })
+
+        });
+
+        // delete alert/////////////////////////////////////
+        var user_id = '';
+        $(document).on('click', '.delete', function() {
+            user_id = $(this).attr('id');
+            Swal.fire({
+                title: 'Do you want to delete this item?',
+                showDenyButton: true,
+                //showCancelButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "DeleteItem/" + user_id,
+                        success: function(response) {
+                            //console.log(response);
+                            if (response.status == 200) {
+                                $('.itemtable').DataTable().ajax.reload();
+                                Swal.fire(response.message, 'success')
+                            }
+                        }
+                    })
+                } else if (result.isDenied) {
+                    Swal.fire('Your Itemname Saved', 'info')
+                }
+            })
+        });
+
+    });
 </script>
