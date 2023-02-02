@@ -56,7 +56,7 @@ class UsersController extends Controller
     public function addItemNamespage(Request $request)
     {
         if ($request->ajax()) {
-
+            //DB::statement(DB::raw('set @rownum=0'));
             $itemnames = DB::table('itemtable')->latest()->get();
             return DataTables::of($itemnames)->addIndexColumn()->addColumn('action', function ($row) {
                 $actionBtn = '<div class="table-data-feature">

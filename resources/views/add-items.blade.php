@@ -165,8 +165,8 @@
             serverSide: true,
             ajax: "{{ route ('AddItem') }}",
             columns: [{
-                    data: 'id',
-                    name: 'id'
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
                 },
                 {
                     data: 'itemname',
@@ -188,34 +188,31 @@
 
         });
 
-        // show popup model
+        // show popup model//////////////////////
         $('#createNewItem').click(function() {
             $('#saveBtn').val("create-product");
             $('#product_id').val('');
             $('#addForm').trigger("reset");
             $('#modelheading').text("Create New Item");
-            //$('#ajaxModel').modal('show');
         });
-        // hide popup model
+        // hide popup model////////////////////////
         $('#closebtn').on('click', function() {
             //alert('reset');
             $('#addForm')[0].reset();
             $("#modalLoginForm").modal("hide");
             $('#save_msgList').html("");
             $('#save_msgList').removeClass('alert alert-danger');
-            //e.preventDefault();
         });
 
-        // reset popup model
+        // reset popup model//////////////////////////
         $('#form-reset').on('click', function(e) {
             //alert('reset');
             $('#addForm')[0].reset();
             $('#save_msgList').html("");
             $('#save_msgList').removeClass('alert alert-danger');
-            //$("#modalLoginForm").modal("hide");
             e.preventDefault();
         });
-
+        /////////////////// add and update function /////////////////////////////
         $("#addForm").submit(function(e) {
             e.preventDefault();
             $.ajaxSetup({
@@ -238,11 +235,10 @@
                 type: "POST",
                 //dataType: 'json',
                 success: function(response) {
-                    //alert(data);
                     //console.log(response);
                     var msghtml = "";
                     if (response.status == 400) {
-                        //console.log(data.errors);save_msgList
+                        //console.log(data.errors);
                         $('#save_msgList').html("");
                         $('#save_msgList').addClass('alert alert-danger');
                         $.each(response.errors, function(key, err_value) {
@@ -267,7 +263,7 @@
             });
         });
 
-        // Edit popup function
+        // Edit popup function ///////////////////////////////////
         $(document).on('click', '.edit', function() {
             var item_id = $(this).attr('id');
             //console.log(id);

@@ -20,6 +20,10 @@
         min-width: 12em !important;
 
     }
+
+    .borderless td {
+        border: none;
+    }
 </style>
 
 <body class="animsition">
@@ -59,28 +63,28 @@
                                             <div class="row">
                                                 <div class="col-md-7">
                                                     <address>
-                                                        ADMIN ADDRESS,<br>
-                                                        <h5>No.71, Shanmugam Street ,</h5>
-                                                        <h5>Manjakuppam ,</h5>
-                                                        <h5>Cuddalore - 607001 .</h5>
-                                                        <h5>Contact : 7598395792 ,</h5>
-                                                        <h5>e-Mail : admin007@gmail.com ,</h5>
-                                                        <h5><strong>GSTIN : 33ASUPV122H1ZK.</strong></h5>
+                                                        <h4> ADMIN ADDRESS :</h4>
+                                                        No.71, Shanmugam Street ,<br>
+                                                        Manjakuppam ,<br>
+                                                        Cuddalore - 607001 .<br>
+                                                        Contact : 7598395792 ,<br>
+                                                        e-Mail : admin007@gmail.com ,<br>
+                                                        GSTIN : 33ASUPV122H1ZK.
                                                     </address>
                                                 </div>
                                                 <div class="col-md-5">
-                                                    Invoice Details : <br>
-                                                    <h5>Invoice No : <span style="margin-left : 70px;">{{01}}</span></h5>
-                                                    <h5>Invoice Date : <input type="text" name="" id="order_date" class="customstyle" style="margin-left : 50px;"> </h5>
-                                                    <h5>Buyer's Order no : <input type="text" name="" id="" class="customstyle" style="margin-left : 19px;"></h5>
-                                                    <h5>Buyer's Order Date :<input type="text" name="" id="buyer_date" class="customstyle" style="margin-left : 5px;"></h5>
-                                                    <h5>Mode of payment :
-                                                        <select name="" id="" class="customstyle" style="margin-left : 11px;">
-                                                            <option value="cash">Cash</option>
-                                                            <option value="bank">Bank transfer</option>
-                                                            <option value="online">online</option>
-                                                        </select>
-                                                    </h5>
+                                                    <h4>Invoice Details : </h4>
+                                                    Invoice No : <span style="margin-left : 70px;">{{01}}</span><br>
+                                                    Invoice Date : <input type="text" name="" id="order_date" class="customstyle" style="margin-left : 50px;"> <br>
+                                                    Buyer's Order no : <input type="text" name="" id="" class="customstyle" style="margin-left : 19px;"><br>
+                                                    Buyer's Order Date :<input type="text" name="" id="buyer_date" class="customstyle" style="margin-left : 5px;"><br>
+                                                    Mode of payment :
+                                                    <select name="" id="" class="customstyle" style="margin-left : 6px;">
+                                                        <option value="cash">Cash</option>
+                                                        <option value="bank">Bank transfer</option>
+                                                        <option value="online">online</option>
+                                                    </select>
+                                                    <br>
                                                     <!-- <h5>Delivery Note :<input type="text" name="" id="" class="customstyle" style="margin-left : 46px;"></h5> -->
                                                 </div>
                                             </div>
@@ -88,7 +92,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <address>
-                                                        Billing Address ,<br />
+                                                        <h4>Billing Address ,</h4>
                                                         <input type="text" name="order_receiver_name" id="order_receiver_name" class="form-control input-sm" style="width:80% ;" placeholder="Enter Receiver Name" />
                                                         <textarea name="order_receiver_address" id="order_receiver_address" class="form-control" style="margin-top: 5px; width:80%" placeholder="Enter Billing Address"></textarea>
                                                     </address>
@@ -97,13 +101,13 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <address>
-                                                        Shopping Address ,</strong> <br />
+                                                        <h4>Shopping Address ,</h4>
                                                         <textarea name="order_receiver_address" id="order_receiver_address" class="form-control" placeholder="Enter Shopping Address"></textarea>
                                                     </address>
                                                 </div>
                                             </div>
                                             <hr>
-                                            <table id="invoice-item-table" class="table table-bordered">
+                                            <table id="invoice-item-table" class="table table-borderless">
                                                 <tr>
                                                     <th width="5%">Sr No.</th>
                                                     <th width="25%">Item Name</th>
@@ -131,17 +135,14 @@
                                                     <td><input type="text" name="item_price[]" id="item_price1" data-srno="1" class="form-control input-sm item_amount" /></td>
                                                     <td><input type="text" name="item_discount_amount[]" id="item_discount1" data-srno="1" class="form-control input-sm item_discount" /></td>
                                                     <td><input type="text" name="item_final_amount[]" id="item_final_amount1" data-srno="1" readonly class="form-control input-sm item_final_amount" /></td>
-                                                    <td><button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs mt-2">+</button></td>
+                                                    <td><button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs mt-2" data-toggle="tooltip" data-placement="top" title="add"><i class="zmdi zmdi-plus"></i></button></td>
                                                 </tr>
                                             </table>
-                                            <!-- <div class="text-right">
-                                                <button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs mt-2">+</button>
-                                            </div> -->
                                         </td>
                                     </tr>
                                     <tr class="">
                                         <td class="d-flex justify-content-end">
-                                            <table style="margin-right:5rem;">
+                                            <table style="margin-right:4rem;">
                                                 <tr class="">
                                                     <td class="">Subtotal (Rs.) </td>
                                                     <td id="final_subtotal">100.00</td>
@@ -211,17 +212,6 @@
 <script>
     // show and hide tax fields
     $(document).ready(function() {
-        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        // $.ajax({
-        //     url: "{{route('GetItems')}}",
-        //     type: 'get',
-        //     dataType: 'html',
-        //     success: function(response) {
-        //         console.log(response);
-        //         $('select["name=itemname[]"]').html(response);
-        //     }
-        // });
-
         // datepicker 1
         $('#order_date').datepicker({
             format: "dd-mm-yyyy",
@@ -235,11 +225,7 @@
             showDropdowns: true,
         });
 
-        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $('.items_names').select2({
-
-        });
-
+        $('.items_names').select2({});
         const final_sub_total = $('#final_subtotal').text();
         var count = 1;
 
@@ -256,26 +242,60 @@
             html_code += '<td><input type="text" name="item_price[]" id="item_price' + count + '" data-srno="' + count + '" class="form-control input-sm item_amount" /></td>';
             html_code += '<td><input type="text" name="item_discount_amount[]" id="item_discount' + count + '" data-srno="' + count + '" class="form-control input-sm item_discount" /></td>';
             html_code += '<td><input type="text" name="item_final_amount[]" id="item_final_amount' + count + '" data-srno="' + count + '" readonly class="form-control input-sm item_final_amount"/></td>';
-            html_code += '<td><button type="button" name="remove_row" id="' + count + '" class="btn btn-danger btn-xs remove_row">X</button></td>';
+            html_code += '<td><button type="button" name="remove_row" id="' + count + '" class="btn btn-danger btn-xs remove_row" data-toggle="tooltip" data-placement="top" title="delete"> <i class="zmdi zmdi-delete"></i></button></td>';
             html_code += '</tr>';
             $('#invoice-item-table').append(html_code);
 
             $('.items_names').select2({
                 placeholder: 'Select an item',
             });
-
-            // $.ajax({
-            //     url: "{{route('GetItems')}}",
-            //     type: 'get',
-            //     dataType: 'html',
-            //     success: function(response) {
-            //         //console.log(response);
-            //         $('select["name=itemname[]"]').html(response);
-            //     }
-            // });
         });
         $(document).on('click', '.remove_row', function() {
             $(this).closest('tr').remove();
+        });
+
+        $('#create_invoice').submit(function(e) {
+            if ($.trim($('#order_receiver_name').val()).length == 0) {
+                Swal.fire(
+                    'Somthing missing',
+                    'Please Enter Recevier Name',
+                    'error'
+                )
+
+                return false;
+                e.preventDefault();
+            }
+
+            // if ($.trim($('#order_no').val()).length == 0) {
+            //     alert("Please Enter Invoice Number");
+            //     return false;
+            // }
+
+            // if ($.trim($('#order_date').val()).length == 0) {
+            //     alert("Please Select Invoice Date");
+            //     return false;
+            // }
+
+            // for (var no = 1; no <= count; no++) {
+            //     if ($.trim($('#item_name' + no).val()).length == 0) {
+            //         alert("Please Enter Item Name");
+            //         $('#item_name' + no).focus();
+            //         return false;
+            //     }
+
+            //     if ($.trim($('#order_item_quantity' + no).val()).length == 0) {
+            //         alert("Please Enter Quantity");
+            //         $('#order_item_quantity' + no).focus();
+            //         return false;
+            //     }
+
+            //     if ($.trim($('#order_item_price' + no).val()).length == 0) {
+            //         alert("Please Enter Price");
+            //         $('#order_item_price' + no).focus();
+            //         return false;
+            //     }
+
+            // }
         });
 
 
