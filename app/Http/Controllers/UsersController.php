@@ -60,9 +60,6 @@ class UsersController extends Controller
             $itemnames = DB::table('itemtable')->latest()->get();
             return DataTables::of($itemnames)->addIndexColumn()->addColumn('action', function ($row) {
                 $actionBtn = '<div class="table-data-feature">
-                <button class="view item" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="view">
-                <i class="zmdi zmdi-eye"></i>
-                </button>
                 <button class="edit item" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit">
                     <i class="zmdi zmdi-edit"></i>
                 </button>

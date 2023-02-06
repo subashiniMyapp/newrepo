@@ -66,7 +66,7 @@
                                                         <h4> ADMIN ADDRESS :</h4>
                                                         No.71, Shanmugam Street ,<br>
                                                         Manjakuppam ,<br>
-                                                        Cuddalore - 607001 .<br>
+                                                        Cuddalore - 607001 ,<br>
                                                         Contact : 7598395792 ,<br>
                                                         e-Mail : admin007@gmail.com ,<br>
                                                         GSTIN : 33ASUPV122H1ZK.
@@ -173,7 +173,7 @@
                                     <tr>
                                         <td colspan="2" class="text-center">
                                             <input type="hidden" name="total_item" id="total_item" value="1" />
-                                            <input type="submit" name="create_invoice" id="create_invoice" class="btn btn-info" value="Cancel" />
+                                            <input type="submit" name="" id="create_invoice" class="btn btn-info" value="Cancel" />
                                             <input type="submit" name="create_invoice" id="create_invoice" class="btn btn-success" value="Create" />
                                         </td>
                                     </tr>
@@ -251,19 +251,28 @@
             });
         });
         $(document).on('click', '.remove_row', function() {
-            $(this).closest('tr').remove();
+            var row_id = $(this).attr("id");
+            var total_item_amount = $('#item_final_amount' + row_id).val();
+            var net_amount = $('#final_nettotal_amount').text();
+            var final_net_amount = parseFloat(net_amount) - parseFloat(total_item_amount);
+            $('#final_nettotal_amount').text(final_net_amount);
+            $('#row_id_' + row_id).remove();
+            count--;
+            $('#total_item').val(count);
         });
 
-        $('#create_invoice').submit(function(e) {
+        $(document).on('submit', '#invoice_form', function(e) {
+            e.preventDefault();
+            //alert('hi');
             if ($.trim($('#order_receiver_name').val()).length == 0) {
                 Swal.fire(
-                    'Somthing missing',
+                    'Field required',
                     'Please Enter Recevier Name',
-                    'error'
+                    'info'
                 )
 
                 return false;
-                e.preventDefault();
+
             }
 
             // if ($.trim($('#order_no').val()).length == 0) {
@@ -276,26 +285,39 @@
             //     return false;
             // }
 
-            // for (var no = 1; no <= count; no++) {
-            //     if ($.trim($('#item_name' + no).val()).length == 0) {
-            //         alert("Please Enter Item Name");
-            //         $('#item_name' + no).focus();
-            //         return false;
-            //     }
+            for (var no = 1; no <= count; no++) {
+                if ($.trim($('#selectitem' + no).val()).length == 0) {
+                    //console.log(no);
+                    Swal.fire(
+                        'Field required',
+                        'Please Enter Select Item Name',
+                        'info'
+                    )
+                    $('#selectitem' + no).focus();
+                    return false;
+                }
 
-            //     if ($.trim($('#order_item_quantity' + no).val()).length == 0) {
-            //         alert("Please Enter Quantity");
-            //         $('#order_item_quantity' + no).focus();
-            //         return false;
-            //     }
+                if ($.trim($('#item_qty' + no).val()).length == 0) {
+                    Swal.fire(
+                        'Field required',
+                        'Please Enter Item Quantity',
+                        'info'
+                    )
+                    $('#item_qty' + no).focus();
+                    return false;
+                }
 
-            //     if ($.trim($('#order_item_price' + no).val()).length == 0) {
-            //         alert("Please Enter Price");
-            //         $('#order_item_price' + no).focus();
-            //         return false;
-            //     }
+                if ($.trim($('#item_price' + no).val()).length == 0) {
+                    Swal.fire(
+                        'Field required',
+                        'Please Enter Item Price',
+                        'info'
+                    )
+                    $('#item_price' + no).focus();
+                    return false;
+                }
 
-            // }
+            }
         });
 
 
