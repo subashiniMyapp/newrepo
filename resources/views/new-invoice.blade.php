@@ -161,7 +161,7 @@
                                                 </tr>
                                                 <tr class="">
                                                     <td>NetTotal</td>
-                                                    <td id="final_nettotal_amount">$107.00</td>
+                                                    <td id="final_nettotal_amount"></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -261,6 +261,40 @@
             $('#total_item').val(count);
         });
 
+        // function cal_final_total(count) {
+        //     var final_item_total = 0;
+        //     for (j = 1; j <= count; j++) {
+        //         var quantity = 0;
+        //         var price = 0;
+        //         var actual_amount = 0;
+
+        //         var item_total = 0;
+        //         quantity = $('#item_qty' + j).val();
+        //         if (quantity > 0) {
+        //             price = $('#item_price' + j).val();
+        //             if (price > 0) {
+        //                 actual_amount = parseFloat(quantity) * parseFloat(price);
+        //                 console.log(actual_amount);
+        //                 $('#item_final_amount' + j).val(actual_amount);
+        //                 // discount_rate = $('#item_discount' + j).val();
+        //                 // if (discount_rate > 0) {
+        //                 //     dis_amount = parseFloat(actual_amount) * parseFloat(discount_rate) / 100;
+        //                 //     $('#order_item_tax1_amount' + j).val(dis_amount);
+        //                 // }
+
+        //                 //item_total = parseFloat(actual_amount) + parseFloat(tax1_amount) + parseFloat(tax2_amount) + parseFloat(tax3_amount);
+        //                 final_item_total = parseFloat(final_item_total) + parseFloat(actual_amount);
+        //                 $('#final_subtotal' + j).val(actual_amount);
+        //             }
+        //         }
+        //     }
+        //     $('#final_nettotal_amount').text(final_item_total);
+        // }
+        console.log(count);
+
+
+
+
         $(document).on('submit', '#invoice_form', function(e) {
             e.preventDefault();
             //alert('hi');
@@ -274,23 +308,12 @@
                 return false;
 
             }
-
-            // if ($.trim($('#order_no').val()).length == 0) {
-            //     alert("Please Enter Invoice Number");
-            //     return false;
-            // }
-
-            // if ($.trim($('#order_date').val()).length == 0) {
-            //     alert("Please Select Invoice Date");
-            //     return false;
-            // }
-
             for (var no = 1; no <= count; no++) {
                 if ($.trim($('#selectitem' + no).val()).length == 0) {
                     //console.log(no);
                     Swal.fire(
                         'Field required',
-                        'Please Enter Select Item Name',
+                        'Please Select Item Name',
                         'info'
                     )
                     $('#selectitem' + no).focus();
