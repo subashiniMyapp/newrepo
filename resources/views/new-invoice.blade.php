@@ -115,8 +115,8 @@
                                                     <th width="5%">Quantity</th>
                                                     <th width="15%">UOM</th>
                                                     <th width="15%">Price</th>
-                                                    <th width="2%">Discount (%)</th>
-                                                    <th width="12%">Total</th>
+                                                    <!-- <th width="2%">Discount (%)</th> -->
+                                                    <th width="15%">Total</th>
                                                 </tr>
                                                 <tr>
 
@@ -130,10 +130,10 @@
                                                         </select>
                                                     </td>
                                                     <td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number1" data-srno="1" class="form-control input-sm" /></td>
-                                                    <td><input type="text" name="item_quantity[]" id="item_qty1" data-srno="1" class="form-control input-sm item_quantity" /></td>
+                                                    <td><input type="text" name="item_quantity[]" id="item_qty1" data-srno="1" class="number_only form-control input-sm item_quantity" /></td>
                                                     <td><input type="text" name="item_uom[]" id="item_uom1" data-srno="1" class="form-control input-sm item_uom" /></td>
                                                     <td><input type="text" name="item_price[]" id="item_price1" data-srno="1" class="form-control input-sm item_amount" /></td>
-                                                    <td><input type="text" name="item_discount_amount[]" id="item_discount1" data-srno="1" class="form-control input-sm item_discount" /></td>
+                                                    <!-- <td><input type="text" name="item_discount_amount[]" id="item_discount1" data-srno="1" class="form-control input-sm item_discount" /></td> -->
                                                     <td><input type="text" name="item_final_amount[]" id="item_final_amount1" data-srno="1" readonly class="form-control input-sm item_final_amount" /></td>
                                                     <td><button type="button" name="add_row" id="add_row" class="btn btn-success btn-xs mt-2" data-toggle="tooltip" data-placement="top" title="add"><i class="zmdi zmdi-plus"></i></button></td>
                                                 </tr>
@@ -142,25 +142,25 @@
                                     </tr>
                                     <tr class="">
                                         <td class="d-flex justify-content-end">
-                                            <table style="margin-right:4rem;">
-                                                <tr class="">
+                                            <table style="margin-right:5rem;">
+                                                <tr>
                                                     <td class="">Subtotal (Rs.) </td>
-                                                    <td id="final_subtotal">100.00</td>
+                                                    <td id="final_subtotal"></td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td class="inputshow">CGST (%)</td>
-                                                    <td id="cgst_tax" contentEditable="true">10</td>
+                                                    <td class="inputshow">CGST(%)</td>
+                                                    <td id="cgst_tax" class="number_only" contentEditable="true" style="width:50% ;"></td>
                                                 </tr>
                                                 <tr class="">
                                                     <td class="inputshow">SGST (%)</td>
-                                                    <td id="sgst_tax" contentEditable="true">8</td>
+                                                    <td id="sgst_tax" class="number_only" contentEditable="true" style="width:50% ;"></td>
                                                 </tr>
                                                 <tr class="">
                                                     <td class="inputshow">IGST (%)</td>
-                                                    <td id="igst_tax" contentEditable="true">6</td>
+                                                    <td id="igst_tax" class="number_only" contentEditable="true" style="width:50% ;"></td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td>NetTotal</td>
+                                                    <td>NetTotal (Rs.)</td>
                                                     <td id="final_nettotal_amount"></td>
                                                 </tr>
                                             </table>
@@ -224,11 +224,29 @@
             autoclose: true,
             showDropdowns: true,
         });
+        // disable fields/////////////////////////////
+        $("#final_subtotal", "#final_nettotal_amount").attr("readOnly", "true");
 
+        // only numbers print///////////////////
+        $('.number_only').keypress(function(e) {
+            return isNumbers(e, this);
+        });
+
+        function isNumbers(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (
+                (charCode != 46 || $(element).val().indexOf('.') != -1) && // “.” CHECK DOT, AND ONLY ONE.
+                (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        // select2 pulgin//////////////////////
         $('.items_names').select2({});
         const final_sub_total = $('#final_subtotal').text();
         var count = 1;
 
+        // Add new rows //////////////////////
         $(document).on('click', '#add_row', function() {
             count++;
             $("#total_item").val(count);
@@ -237,10 +255,10 @@
             html_code += '<td><span id="sr_no">' + count + '</span></td>';
             html_code += '<td><select name = "itemname[]"  id="selectitem' + count + '" data-srno = "' + count + '" class="form-control items_names"> <option value="" selected disabled>Select Item Name</option> @foreach($users as $user)<option value="{{$user->id}}">{{$user->itemname}}</option>@endforeach</select>';
             html_code += '<td><input type="text" name="item_hsn_sac[]" id="hsn_sca_number' + count + '" data-srno="' + count + '" class="form-control input-sm" /></td>';
-            html_code += '<td><input type="text" name="item_quantity[]" id="item_qty' + count + '" data-srno="' + count + '" class="form-control input-sm item_quantity" /></td>';
+            html_code += '<td><input type="text" name="item_quantity[]" id="item_qty' + count + '" data-srno="' + count + '" class="number_only form-control input-sm item_quantity " /></td>';
             html_code += '<td><input type="text" name="item_uom[]" id="item_uom' + count + '" data-srno="' + count + '" class="form-control input-sm item_uom" /></td>';
-            html_code += '<td><input type="text" name="item_price[]" id="item_price' + count + '" data-srno="' + count + '" class="form-control input-sm item_amount" /></td>';
-            html_code += '<td><input type="text" name="item_discount_amount[]" id="item_discount' + count + '" data-srno="' + count + '" class="form-control input-sm item_discount" /></td>';
+            html_code += '<td><input type="text" name="item_price[]" id="item_price' + count + '" data-srno="' + count + '" class="form-control input-sm item_amount " /></td>';
+            // html_code += '<td><input type="text" name="item_discount_amount[]" id="item_discount' + count + '" data-srno="' + count + '" class="form-control input-sm item_discount " /></td>';
             html_code += '<td><input type="text" name="item_final_amount[]" id="item_final_amount' + count + '" data-srno="' + count + '" readonly class="form-control input-sm item_final_amount"/></td>';
             html_code += '<td><button type="button" name="remove_row" id="' + count + '" class="btn btn-danger btn-xs remove_row" data-toggle="tooltip" data-placement="top" title="delete"> <i class="zmdi zmdi-delete"></i></button></td>';
             html_code += '</tr>';
@@ -256,43 +274,63 @@
             var net_amount = $('#final_nettotal_amount').text();
             var final_net_amount = parseFloat(net_amount) - parseFloat(total_item_amount);
             $('#final_nettotal_amount').text(final_net_amount);
+            $('#final_subtotal').text(final_net_amount);
             $('#row_id_' + row_id).remove();
             count--;
             $('#total_item').val(count);
         });
 
-        // function cal_final_total(count) {
-        //     var final_item_total = 0;
-        //     for (j = 1; j <= count; j++) {
-        //         var quantity = 0;
-        //         var price = 0;
-        //         var actual_amount = 0;
+        function cal_final_total(count) {
+            var final_item_total = 0;
+            for (j = 1; j <= count; j++) {
+                //console.log(j);
+                var quantity = 0;
+                var price = 0;
+                var actual_amount = 0;
 
-        //         var item_total = 0;
-        //         quantity = $('#item_qty' + j).val();
-        //         if (quantity > 0) {
-        //             price = $('#item_price' + j).val();
-        //             if (price > 0) {
-        //                 actual_amount = parseFloat(quantity) * parseFloat(price);
-        //                 console.log(actual_amount);
-        //                 $('#item_final_amount' + j).val(actual_amount);
-        //                 // discount_rate = $('#item_discount' + j).val();
-        //                 // if (discount_rate > 0) {
-        //                 //     dis_amount = parseFloat(actual_amount) * parseFloat(discount_rate) / 100;
-        //                 //     $('#order_item_tax1_amount' + j).val(dis_amount);
-        //                 // }
+                var item_total = 0;
+                quantity = $('#item_qty' + j).val();
+                if (quantity > 0) {
+                    price = $('#item_price' + j).val();
+                    if (price > 0) {
+                        actual_amount = parseFloat(quantity) * parseFloat(price);
+                        //console.log(actual_amount);
+                        $('#item_final_amount' + j).val(actual_amount);
+                        final_item_total = parseFloat(final_item_total) + parseFloat(actual_amount);
+                        $('#final_subtotal').text(final_item_total);
+                    }
+                }
+            }
 
-        //                 //item_total = parseFloat(actual_amount) + parseFloat(tax1_amount) + parseFloat(tax2_amount) + parseFloat(tax3_amount);
-        //                 final_item_total = parseFloat(final_item_total) + parseFloat(actual_amount);
-        //                 $('#final_subtotal' + j).val(actual_amount);
-        //             }
-        //         }
-        //     }
-        //     $('#final_nettotal_amount').text(final_item_total);
-        // }
-        console.log(count);
+            $('#final_nettotal_amount').text(final_item_total);
+            $('#cgst_tax,#sgst_tax,#igst_tax').keyup(function() {
+                var disCount = $("#igst_tax").text();
+                var grass_total = $('#final_subtotal').text();
+                console.log(grass_total);
+                if (disCount !== "") {
+                    var tax_netAmount = parseFloat(grass_total) * parseFloat(disCount) / 100;
+                    console.log(tax_netAmount);
 
+                }
+                var disCount1 = $("#cgst_tax").text();
+                if (disCount1 !== "") {
+                    //console.log(disCount);
+                    //console.log(disCount1);
 
+                }
+                var disCount2 = $("#sgst_tax").text();
+                if (disCount2 !== "") {
+                    //console.log(disCount);
+                    //console.log(disCount2);
+
+                }
+            });
+
+        }
+        $(document).on('blur', '.item_amount', function() {
+            cal_final_total(count);
+
+        });
 
 
         $(document).on('submit', '#invoice_form', function(e) {
@@ -342,9 +380,5 @@
 
             }
         });
-
-
-
-
     });
 </script>
