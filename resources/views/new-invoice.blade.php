@@ -55,7 +55,6 @@
                         <form action="" method="post" id="invoice_form">
                             <div class="table-responsive">
                                 <h3 class="title-3 m-b-30">Create Invoice</h3>
-
                                 <hr>
                                 <table class="table table-bordered">
                                     <tr>
@@ -149,15 +148,15 @@
                                                 </tr>
                                                 <tr class="">
                                                     <td class="inputshow">CGST(%)</td>
-                                                    <td id="cgst_tax" class="number_only" contentEditable="true" style="width:50% ;"></td>
+                                                    <td id="cgst_tax" class="tax" contentEditable="true" style="width:50% ;"></td>
                                                 </tr>
                                                 <tr class="">
                                                     <td class="inputshow">SGST (%)</td>
-                                                    <td id="sgst_tax" class="number_only" contentEditable="true" style="width:50% ;"></td>
+                                                    <td id="sgst_tax" class="tax" contentEditable="true" style="width:50% ;"></td>
                                                 </tr>
                                                 <tr class="">
                                                     <td class="inputshow">IGST (%)</td>
-                                                    <td id="igst_tax" class="number_only" contentEditable="true" style="width:50% ;"></td>
+                                                    <td id="igst_tax" class="tax" contentEditable="true" style="width:50% ;"></td>
                                                 </tr>
                                                 <tr class="">
                                                     <td>NetTotal (Rs.)</td>
@@ -213,6 +212,7 @@
     // show and hide tax fields
     $(document).ready(function() {
         // datepicker 1
+        var taxArray = [];
         $('#order_date').datepicker({
             format: "dd-mm-yyyy",
             autoclose: true,
@@ -227,24 +227,12 @@
         // disable fields/////////////////////////////
         $("#final_subtotal", "#final_nettotal_amount").attr("readOnly", "true");
 
-        // only numbers print///////////////////
-        $('.number_only').keypress(function(e) {
-            return isNumbers(e, this);
-        });
-
-        function isNumbers(evt, element) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
-            if (
-                (charCode != 46 || $(element).val().indexOf('.') != -1) && // “.” CHECK DOT, AND ONLY ONE.
-                (charCode < 48 || charCode > 57))
-                return false;
-            return true;
-        }
 
         // select2 pulgin//////////////////////
         $('.items_names').select2({});
         const final_sub_total = $('#final_subtotal').text();
         var count = 1;
+        var $totalItemAmount = 0;
 
         // Add new rows //////////////////////
         $(document).on('click', '#add_row', function() {
@@ -298,38 +286,43 @@
                         $('#item_final_amount' + j).val(actual_amount);
                         final_item_total = parseFloat(final_item_total) + parseFloat(actual_amount);
                         $('#final_subtotal').text(final_item_total);
+
+                        var taxRates = [];
+                        $('.tax').blur(function() {
+                            var inputValue = $(this).text();
+                            //console.log(inputValue1);
+                            taxRates.push(inputValue);
+                            //console.log(taxRates);
+                            totalItemAmount = $('#final_subtotal').text();
+
+                            var totalTaxAmount = 0;
+                            var netAmount = 0;
+                            $.each(taxRates, function(index, value) {
+                                totalTaxAmount += (totalItemAmount * value) / 100;
+                                //console.log(totalTaxAmount);
+                            });
+                            var netAmount = parseFloat(totalItemAmount) + parseFloat(totalTaxAmount);
+                            //console.log(netAmount);
+                            $('#final_nettotal_amount').text(netAmount);
+                        });
                     }
                 }
             }
 
-            $('#final_nettotal_amount').text(final_item_total);
-            $('#cgst_tax,#sgst_tax,#igst_tax').keyup(function() {
-                var disCount = $("#igst_tax").text();
-                var grass_total = $('#final_subtotal').text();
-                console.log(grass_total);
-                if (disCount !== "") {
-                    var tax_netAmount = parseFloat(grass_total) * parseFloat(disCount) / 100;
-                    console.log(tax_netAmount);
+        }
 
-                }
-                var disCount1 = $("#cgst_tax").text();
-                if (disCount1 !== "") {
-                    //console.log(disCount);
-                    //console.log(disCount1);
+        function calculateNetAmount() {
 
-                }
-                var disCount2 = $("#sgst_tax").text();
-                if (disCount2 !== "") {
-                    //console.log(disCount);
-                    //console.log(disCount2);
 
-                }
-            });
 
         }
+        calculateNetAmount();
+
         $(document).on('blur', '.item_amount', function() {
             cal_final_total(count);
 
+            // $totalItemAmount = $('#final_nettotal_amount').text(final_item_total);
+            // calculateNetAmount($totalItemAmount,);
         });
 
 
