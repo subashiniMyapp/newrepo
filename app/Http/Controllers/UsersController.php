@@ -26,6 +26,16 @@ class UsersController extends Controller
         $creatials = $request->only('email', 'password');
         if (Auth::attempt($creatials)) {
             //$request->session()->regenerate();
+            $user = Auth::user();
+
+            // Store the user's credentials in the session
+            session([
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'user_email' => $user->email,
+                'user_logged_in' => true
+            ]);
+
             return redirect()->intended('dashborad')->withSuccess('Welcome Admin');
         }
         return redirect('login')->withSuccess('Kindly check your login creatials..!');
@@ -169,5 +179,16 @@ class UsersController extends Controller
     public function demo()
     {
         return view('demo');
+    }
+    public function changePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'oldpass' => 'required',
+            'newpass' => 'required|min:8',
+            'confirmpass' => 'required|same:newpass',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
     }
 }

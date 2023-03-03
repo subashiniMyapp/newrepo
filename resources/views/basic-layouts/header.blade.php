@@ -126,7 +126,7 @@
                             <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                         </div>
                         <div class="content">
-                            <a class="js-acc-btn" href="#">Admin</a>
+                            <a class="js-acc-btn" href="#">{{ session('user_name') }}</a>
                         </div>
                         <div class="account-dropdown js-dropdown">
                             <div class="info clearfix">
@@ -137,19 +137,18 @@
                                 </div>
                                 <div class="content">
                                     <h5 class="name">
-                                        <a href="#">Admin</a>
+                                        <a href="#">{{ session('user_name') }}</a>
                                     </h5>
-                                    <span class="email">admin@example.com</span>
+                                    <span class="email">{{ session('user_email') }}</span>
                                 </div>
                             </div>
                             <div class="account-dropdown__body">
-                                <div class="account-dropdown__item">
+                                <!-- <div class="account-dropdown__item">
                                     <a href="#">
                                         <i class="zmdi zmdi-account"></i>Edit Profile</a>
-                                </div>
-
+                                </div> -->
                                 <div class="account-dropdown__item">
-                                    <a href="#">
+                                    <a href="{{route('demo')}}">
                                         <i class="zmdi zmdi-key"></i>Change Password</a>
                                 </div>
                             </div>

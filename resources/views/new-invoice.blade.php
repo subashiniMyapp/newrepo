@@ -13,7 +13,6 @@
         padding: 0.375rem 0.75rem;
         border: 1px solid #ced4da;
         border-radius: 2px;
-
     }
 
     .select2-container {
@@ -92,8 +91,8 @@
                                                 <div class="col-md-6">
                                                     <address>
                                                         <h4>Billing Address ,</h4>
-                                                        <input type="text" name="order_receiver_name" id="order_receiver_name" class="form-control input-sm" style="width:80% ;" placeholder="Enter Receiver Name" />
-                                                        <textarea name="order_receiver_address" id="order_receiver_address" class="form-control" style="margin-top: 5px; width:80%" placeholder="Enter Billing Address"></textarea>
+                                                        <input type="text" name="order_receiver_name" id="order_receiver_name" class="form-control input-sm" style="width:80% ; border:none" placeholder="Enter Receiver Name" />
+                                                        <textarea name="order_receiver_address" id="order_receiver_address" class="form-control" style="margin-top: 5px; width:80%; border:none" placeholder="Enter Billing Address"></textarea>
                                                     </address>
                                                 </div>
                                                 <div class="col-md-2">
@@ -101,7 +100,7 @@
                                                 <div class="col-md-4">
                                                     <address>
                                                         <h4>Shopping Address ,</h4>
-                                                        <textarea name="order_receiver_address" id="order_receiver_address" class="form-control" placeholder="Enter Shopping Address"></textarea>
+                                                        <textarea name="order_receiver_address" id="order_receiver_address" style="border:none" class="form-control" placeholder="Enter Shopping Address"></textarea>
                                                     </address>
                                                 </div>
                                             </div>
@@ -270,13 +269,16 @@
 
         function cal_final_total(count) {
             var final_item_total = 0;
+
             for (j = 1; j <= count; j++) {
                 //console.log(j);
                 var quantity = 0;
                 var price = 0;
                 var actual_amount = 0;
-
                 var item_total = 0;
+                var tax1 = 0;
+                var tax2 = 0;
+                var tax3 = 0;
                 quantity = $('#item_qty' + j).val();
                 if (quantity > 0) {
                     price = $('#item_price' + j).val();
@@ -287,36 +289,73 @@
                         final_item_total = parseFloat(final_item_total) + parseFloat(actual_amount);
                         $('#final_subtotal').text(final_item_total);
 
-                        var taxRates = [];
-                        $('.tax').blur(function() {
-                            var inputValue = $(this).text();
-                            //console.log(inputValue1);
-                            taxRates.push(inputValue);
-                            //console.log(taxRates);
-                            totalItemAmount = $('#final_subtotal').text();
+                        //var taxRates = [];
+                        // $('.tax').blur(function() {
+                        //     var inputValue = $(this).text();
+                        //     //console.log(inputValue1);
+                        //     taxRates.push(inputValue);
+                        //     //console.log(taxRates);
+                        //     totalItemAmount = $('#final_subtotal').text();
 
-                            var totalTaxAmount = 0;
-                            var netAmount = 0;
-                            $.each(taxRates, function(index, value) {
-                                totalTaxAmount += (totalItemAmount * value) / 100;
-                                //console.log(totalTaxAmount);
-                            });
-                            var netAmount = parseFloat(totalItemAmount) + parseFloat(totalTaxAmount);
-                            //console.log(netAmount);
-                            $('#final_nettotal_amount').text(netAmount);
-                        });
+                        //     var totalTaxAmount = 0;
+                        //     var netAmount = 0;
+                        //     $.each(taxRates, function(index, value) {
+                        //         totalTaxAmount += (totalItemAmount * value) / 100;
+                        //         //console.log(totalTaxAmount);
+                        //     });
+                        //     var netAmount = parseFloat(totalItemAmount) + parseFloat(totalTaxAmount);
+                        //     //console.log(netAmount);
+                        //     $('#final_nettotal_amount').text(netAmount);
+                        // });
                     }
                 }
             }
 
         }
 
-        function calculateNetAmount() {
+        // function cal_final_total(count) {
+        //     var final_item_total = 0;
+        //     for (j = 1; j <= count; j++) {
+        //         var quantity = 0;
+        //         var price = 0;
+        //         var actual_amount = 0;
+        //         var tax1_rate = 0;
+        //         var tax1_amount = 0;
+        //         var tax2_rate = 0;
+        //         var tax2_amount = 0;
+        //         var tax3_rate = 0;
+        //         var tax3_amount = 0;
+        //         var item_total = 0;
+        //         quantity = $('#order_item_quantity' + j).val();
+        //         if (quantity > 0) {
+        //             price = $('#order_item_price' + j).val();
+        //             if (price > 0) {
+        //                 actual_amount = parseFloat(quantity) * parseFloat(price);
+        //                 $('#order_item_actual_amount' + j).val(actual_amount);
+        //                 tax1_rate = $('#order_item_tax1_rate' + j).val();
+        //                 if (tax1_rate > 0) {
+        //                     tax1_amount = parseFloat(actual_amount) * parseFloat(tax1_rate) / 100;
+        //                     $('#order_item_tax1_amount' + j).val(tax1_amount);
+        //                 }
+        //                 tax2_rate = $('#order_item_tax2_rate' + j).val();
+        //                 if (tax2_rate > 0) {
+        //                     tax2_amount = parseFloat(actual_amount) * parseFloat(tax2_rate) / 100;
+        //                     $('#order_item_tax2_amount' + j).val(tax2_amount);
+        //                 }
+        //                 tax3_rate = $('#order_item_tax3_rate' + j).val();
+        //                 if (tax3_rate > 0) {
+        //                     tax3_amount = parseFloat(actual_amount) * parseFloat(tax3_rate) / 100;
+        //                     $('#order_item_tax3_amount' + j).val(tax3_amount);
+        //                 }
+        //                 item_total = parseFloat(actual_amount) + parseFloat(tax1_amount) + parseFloat(tax2_amount) + parseFloat(tax3_amount);
+        //                 final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
+        //                 $('#order_item_final_amount' + j).val(item_total);
+        //             }
+        //         }
+        //     }
+        //     $('#final_total_amt').text(final_item_total);
+        // }
 
-
-
-        }
-        calculateNetAmount();
 
         $(document).on('blur', '.item_amount', function() {
             cal_final_total(count);

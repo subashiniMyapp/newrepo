@@ -27,3 +27,4 @@ Route::get('/showData/{id}', [UsersController::class, 'getDataById'])->name('sho
 Route::post('UpdateItem', [UsersController::class, 'updateItem'])->name('UpdateItem');
 Route::get('/DeleteItem/{id}', [UsersController::class, 'destroy'])->name('DeleteItem');
 Route::get('/demo', [UsersController::class, 'demo'])->name('demo');
+Route::post('changepassword', [UsersController::class, 'changePassword'])->name('changepassword');

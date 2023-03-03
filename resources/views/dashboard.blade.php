@@ -46,7 +46,7 @@
                                 <div class="overview-wrap">
                                     <h2 class="title-1">overview</h2>
 
-                                    <a class="au-btn au-btn-icon au-btn--blue" href="#">
+                                    <a class="au-btn au-btn-icon au-btn--blue" href="{{ route('AddItem') }}">
                                         <i class="zmdi zmdi-plus"></i>add item</a>
                                 </div>
                             </div>
