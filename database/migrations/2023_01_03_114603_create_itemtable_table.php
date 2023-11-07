@@ -16,8 +16,8 @@ class CreateItemtableTable extends Migration
         Schema::create('itemtable', function (Blueprint $table) {
             $table->id();
             $table->char('itemname', 100);
-            $table->char('descrption', 150);
-            $table->char('umo', 100);
+            $table->char('description', 150);
+            $table->char('uom', 100);
             $table->timestamps();
         });
     }

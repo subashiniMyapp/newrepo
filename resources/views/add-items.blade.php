@@ -221,7 +221,7 @@
                 }
             });
             var data = $(this).serialize();
-            //console.log(data);
+            console.log(data);
             var action_url = '';
             if ($('#saveBtn').val() == "create-product") {
                 action_url = "{{ route('SaveItem') }}";
@@ -235,7 +235,7 @@
                 type: "POST",
                 //dataType: 'json',
                 success: function(response) {
-                    //console.log(response);
+                    console.log(response);
                     var msghtml = "";
                     if (response.status == 400) {
                         //console.log(data.errors);
